@@ -14,8 +14,8 @@ The initial setup was made with [Vue CLI](https://cli.vuejs.org/):
 Packages manually instalated:
 
 - [x] Element
-- [x] Jest
-- [ ] Firebase
+- [ ] Jest
+- [x] Firebase
 
 ## Application Rules
 - CRUD Exercises
