@@ -14,4 +14,24 @@ The initial setup was made with [Vue CLI](https://cli.vuejs.org/):
 Packages manually instalated:
 
 - [x] Element
-- [ ] Jest
+- [x] Jest
+- [ ] Firebase
+
+## Application Rules
+- CRUD Exercises
+  - 36 default exercises
+- CRUD Workout
+  - 3 default workouts
+- Mark exercises as complete in workout
+- Mark workout as complete if all exercises are completed
+## Roadmap
+
+
+## Features
+- [ ] Dark theme 🌙
+- [ ] Google Auth 🔐
+- [ ] Profile page 🧔
+
+
+## Thanks
+- All exercises are taked from [WGER](https://wger.de/). 
