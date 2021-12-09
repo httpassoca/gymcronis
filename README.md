@@ -1,29 +1,17 @@
-# gymcronis
+# gymcronis 💪
 
-## Project setup
-```
-yarn install
-```
+An application for workouts to Acronis test. Yes, a bigger 💪 test!
 
-### Compiles and hot-reloads for development
-```
-yarn serve
-```
+## Stacks
+The initial setup was made with [Vue CLI](https://cli.vuejs.org/):
 
-### Compiles and minifies for production
-```
-yarn build
-```
+- Vue 2
+- Vuex
+- Vue Router
+- Typescript
+- Dart Sass
 
-### Run your end-to-end tests
-```
-yarn test:e2e
-```
+Packages manually instalated:
 
-### Lints and fixes files
-```
-yarn lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+- [x] Element
+- [ ] Jest
