@@ -1,7 +1,7 @@
 <template>
-<p>
+<div>
   Exercises
-</p>
+</div>
 </template>
 
 <script lang="ts">
