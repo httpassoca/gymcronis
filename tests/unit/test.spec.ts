@@ -1,6 +1,6 @@
 import { mount, createLocalVue } from '@vue/test-utils';
 import ElementUI from 'element-ui';
-import About from '@/views/About.vue';
+import About from '@/views/Auth.vue';
 
 const localVue = createLocalVue();
 localVue.use(ElementUI);
