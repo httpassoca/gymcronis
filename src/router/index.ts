@@ -1,30 +1,22 @@
 import Vue from 'vue';
-import VueRouter, { RouteConfig } from 'vue-router';
+import VueRouter from 'vue-router';
+
+import routes from './routes';
 
 Vue.use(VueRouter);
-
-const routes: Array<RouteConfig> = [
-  {
-    path: '/',
-    name: 'Auth',
-    component: () => import('../views/ViewAuth.vue'),
-  },
-  {
-    path: '/workouts',
-    name: 'Workouts',
-    component: () => import('../views/ViewWorkouts.vue'),
-  },
-  {
-    path: '/exercises',
-    name: 'Exercises',
-    component: () => import('../views/ViewExercises.vue'),
-  },
-];
 
 const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
   routes,
+});
+
+// Auth access
+router.beforeEach((to, from, next) => {
+  const isAuthenticated = false;
+  if (to.matched.some((record) => record.meta.requiresAuth) && !isAuthenticated) {
+    next({ name: 'Error', params: { error: 401 } });
+  } else next();
 });
 
 export default router;
