@@ -1,19 +1,28 @@
 module.exports = {
   verbose: true,
-  rootDir: './tests',
+  preset: '@vue/cli-plugin-unit-jest/presets/typescript-and-babel',
+
   moduleFileExtensions: [
     'js',
     'json',
-    // tell Jest to handle `*.vue` files
-    'spec.ts',
+    'vue',
+    'ts',
   ],
-  transform: {
-    '^.+\\.tsx?$': 'ts-jest',
+
+  // localVue.use(ElementUI) doesnt work without this
+  // https://github.com/ElemeFE/element/issues/11811
+  moduleNameMapper: {
+    '\\.css$': '<rootDir>/tests/__mocks__/styleMock.js',
   },
+
+  transformIgnorePatterns: [
+    '/node_modules/',
+  ],
+
   collectCoverageFrom: [
     '**/*.{ts,vue}',
     '!**/*.{d.ts}',
     '!**/node_modules/**',
   ],
-  testRegex: '(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$',
+
 };

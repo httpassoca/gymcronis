@@ -1,15 +1,22 @@
 <template>
   <div class="hello">
     <h1>{{ msg }}</h1>
-    <el-button>Hello, giant</el-button>
+    <Button>Hello, giant</Button>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
+import {
+  Button,
+} from 'element-ui';
 
 export default Vue.extend({
   name: 'HelloWorld',
+  components: {
+    Button,
+  },
+
   props: {
     msg: String,
   },
