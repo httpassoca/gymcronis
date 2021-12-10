@@ -26,6 +26,19 @@ Packages manually instalated:
 - Mark workout as complete if all exercises are completed
 ## Roadmap
 
+- [x] Add dependecies
+- [ ] Create layout
+- [ ] Create routes
+- [ ] API connection
+- [ ] Google Auth
+- [ ] Protect routes
+- [ ] Config firebase db rules
+- [ ] Create firebase db structure
+- [ ] Add default exercises
+- [ ] Add exercises CRUD
+- [ ] Add workouts CRUD
+- [ ] Add workouts integration with exercises
+
 
 ## Features
 - [ ] Dark theme 🌙
@@ -33,5 +46,10 @@ Packages manually instalated:
 - [ ] Profile page 🧔
 
 
+## How to run it
+The usual 👍
+```
+  yarn && yarn dev
+```
 ## Thanks
 - All exercises are taked from [WGER](https://wger.de/). 
