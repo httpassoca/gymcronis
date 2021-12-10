@@ -27,11 +27,12 @@ Packages manually instalated:
 ## Roadmap
 
 - [x] Add dependecies
-- [ ] Create layout
-- [ ] Create routes
+- [x] Create routes
+- [x] Create layout
+  - [x] Auth page layout
 - [ ] API connection
 - [ ] Google Auth
-- [ ] Protect routes
+- [/] Protect routes
 - [ ] Config firebase db rules
 - [ ] Create firebase db structure
 - [ ] Add default exercises
