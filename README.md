@@ -35,11 +35,11 @@ Packages manually instalated:
 - [x] Google Auth
 - [x] Protect routes
 - [x] Notifications
-- [ ] Loading app style
+- [x] Loading app style
+- [x] Add exercises module on vuex
 - [ ] Add workouts module on vuex
-- [ ] Add exercises module on vuex
-- [ ] Config firebase db rules
-- [ ] Create firebase db structure
+- [x] Config firebase db rules
+- [x] Create firebase db structure
 - [ ] Add default exercises
 - [ ] Add exercises CRUD
 - [ ] Add workouts CRUD
