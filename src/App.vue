@@ -70,10 +70,7 @@ export default Vue.extend({
     }),
     async logout() {
       await this.signOut();
-      this.createToast({
-        text: 'Bye! 👋',
-        type: 'good',
-      });
+      this.createToast({ text: 'Bye! 👋' });
       this.$router.replace('/auth');
     },
   },
@@ -118,6 +115,8 @@ html
   b
     color: black
     margin-right: 12px
+  svg
+    cursor: pointer
 .flex-column
   display: flex
   flex-direction: column
