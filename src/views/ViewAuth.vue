@@ -1,6 +1,6 @@
 <template>
 <div class="auth">
-  <Card class="auth--card">
+  <Card>
     <p>
       Hi bro! You need to login to use the app.
     </p>
@@ -52,14 +52,9 @@ export default Vue.extend({
 </script>
 
 <style lang="sass" scoped>
+@import '../sass/mixins'
 .auth
-  width: 100vw
-  height: 100vh
-  display: flex
-  justify-content: center
-  align-items: center
-  .auth--card
-    min-width: 350px
+  @include visitorPage
 </style>
 <style lang="sass">
 .auth--button
