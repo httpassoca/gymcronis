@@ -13,9 +13,10 @@ const router = new VueRouter({
 
 // Auth access
 router.beforeEach((to, from, next) => {
-  const isAuthenticated = false;
+  const token = localStorage.getItem('gymcronisUserToken');
+  const isAuthenticated = token && token !== '';
   if (to.matched.some((record) => record.meta.requiresAuth) && !isAuthenticated) {
-    next({ name: 'Error', params: { error: 401 } });
+    next({ name: 'Error', params: { error: '401' } });
   } else next();
 });
 

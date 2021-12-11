@@ -7,7 +7,7 @@
     </div>
     <div v-else-if="error == 401">
       <h2> Unauthorized</h2>
-      <Button> Go to login page </Button>
+      <Button @click="$router.replace('/auth')"> Go to login page </Button>
     </div>
 
   </div>

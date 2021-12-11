@@ -30,9 +30,10 @@ Packages manually instalated:
 - [x] Create routes
 - [x] Create layout
   - [x] Auth page layout
-- [ ] API connection
-- [ ] Google Auth
-- [/] Protect routes
+- [x] API connection
+- [x] Google Auth
+- [x] Protect routes
+- [ ] Notifications
 - [ ] Config firebase db rules
 - [ ] Create firebase db structure
 - [ ] Add default exercises
