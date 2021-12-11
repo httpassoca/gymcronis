@@ -7,7 +7,12 @@ import getters from './getters';
 import { ModuleState } from './types';
 
 export const state: ModuleState = {
-  exercises: [],
+  exercises: [{
+    authorId: 'aid',
+    id: 'id',
+    muscle: 'muscle',
+    name: 'name',
+  }],
 };
 
 const namespaced = true;

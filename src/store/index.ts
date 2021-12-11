@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Vuex, { StoreOptions } from 'vuex';
 import { RootState } from './types';
+import exercises from './exercises';
 import layout from './layout';
 import user from './user';
 
@@ -15,6 +16,7 @@ const store: StoreOptions<RootState> = {
   modules: {
     user,
     layout,
+    exercises,
   },
 };
 

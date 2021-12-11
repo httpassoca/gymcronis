@@ -1,5 +1,6 @@
 export type Exercise = {
-  id: number;
+  id: string;
+  authorId: string;
   name: string;
   custom?: boolean;
   muscle: string;
