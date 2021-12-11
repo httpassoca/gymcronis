@@ -1,5 +1,5 @@
 <template>
-<div class="toast">
+<div class="toast" :class="notification.type">
   <span>{{ notification.text }}</span>
   <i v-if="notification.type === 'good'" class="el-icon-circle-check"/>
   <i v-if="notification.type === 'bad'" class="el-icon-circle-close"/>
@@ -43,13 +43,15 @@ export default Vue.extend({
   align-items: center
   margin-bottom: 10px
   border-radius: 5px
-  background-color: #900000
   width: 300px
   padding: 12px
   color: white
   box-shadow: 0 0 6px -1px rgba(0,0,0,.7)
   animation: .5s disappear
   animation-delay: 3s
+  background-color: #900000
+  &.good
+    background-color: #228C22
 
 @keyframes disappear
   0%
