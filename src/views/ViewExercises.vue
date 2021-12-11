@@ -1,6 +1,7 @@
 <template>
 <div>
   <Button @click="create">create exercise</Button>
+  <Button @click="getExercises">get exercises</Button>
   {{ exercises }}
 </div>
 </template>
@@ -22,15 +23,14 @@ export default Vue.extend({
   methods: {
     ...mapActions({
       createExercise: 'exercises/create',
+      getExercises: 'exercises/get',
     }),
 
     async create() {
-      const newUser = await this.createExercise({
-        id: 'id',
+      await this.createExercise({
         muscle: 'muscle',
         name: 'name',
       });
-      console.log(newUser);
     },
   },
 });

@@ -9,7 +9,6 @@ import { ModuleState } from './types';
 export const state: ModuleState = {
   exercises: [{
     authorId: 'aid',
-    id: 'id',
     muscle: 'muscle',
     name: 'name',
   }],
