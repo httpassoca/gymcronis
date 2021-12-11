@@ -11,7 +11,7 @@ import { User, ModuleState } from './types';
 import { RootState } from '../types';
 
 const actions: ActionTree<ModuleState, RootState> = {
-  async signUp({ commit }) {
+  async signUp({ commit, dispatch }) {
     // Google auth: https://firebase.google.com/docs/auth/web/google-signin
 
     const provider = new GoogleAuthProvider();
@@ -33,7 +33,14 @@ const actions: ActionTree<ModuleState, RootState> = {
         commit('SET_USER', user);
         return user;
       })
-      .catch((err) => commit('notify', err));
+      .catch((err) => {
+        console.log(err);
+        dispatch(
+          'notification/create',
+          { text: 'Login with Google Failed 😞', type: 'bad' },
+          { root: true },
+        );
+      });
   },
 
   checkAuth({ commit }) {
