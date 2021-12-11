@@ -1,5 +1,10 @@
 import { ActionTree } from 'vuex';
-import { GoogleAuthProvider, signInWithPopup, signOut } from 'firebase/auth';
+import {
+  GoogleAuthProvider,
+  onAuthStateChanged,
+  signInWithPopup,
+  signOut,
+} from 'firebase/auth';
 import { auth } from '@/services/firebase';
 
 import { User, ModuleState } from './types';
@@ -24,10 +29,26 @@ const actions: ActionTree<ModuleState, RootState> = {
           token: await credentials.user.getIdToken(),
         };
 
+        localStorage.setItem('gymcronisUserToken', user.token);
         commit('SET_USER', user);
         return user;
       })
       .catch((err) => commit('notify', err));
+  },
+
+  checkAuth({ commit }) {
+    onAuthStateChanged(auth, async (user) => {
+      if (!user || !user.displayName) {
+        localStorage.removeItem('gymcronisUserToken');
+        return;
+      }
+      const loggedUser: User = {
+        name: user.displayName,
+        id: user.uid,
+        token: await user.getIdToken(),
+      };
+      commit('SET_USER', loggedUser);
+    });
   },
 
   async signOut({ commit }) {

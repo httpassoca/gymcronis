@@ -26,15 +26,18 @@
 <script lang="ts">
 import Vue from 'vue';
 import { mapActions, mapGetters } from 'vuex';
+
 import {
-  Main, Container, Header, Tooltip,
+  Main,
+  Container,
+  Header,
+  Tooltip,
 } from 'element-ui';
 import AppMenu from '@/components/AppMenu.vue';
 
 export default Vue.extend({
   name: 'App',
   components: {
-
     Container,
     Main,
     Header,
@@ -51,11 +54,15 @@ export default Vue.extend({
   computed: mapGetters({ username: 'user/userName' }),
 
   methods: {
-    ...mapActions({ signOut: 'user/signOut' }),
+    ...mapActions({ signOut: 'user/signOut', checkAuth: 'user/checkAuth' }),
     async logout() {
       await this.signOut();
       this.$router.replace('/auth');
     },
+  },
+
+  beforeMount() {
+    this.checkAuth();
   },
 });
 </script>
@@ -68,7 +75,7 @@ export default Vue.extend({
   border: none !important
   box-sizing: border-box
 html
-  font-size: 16px
+  font-size: 20px
   line-height: 1.3
   -ms-text-size-adjust: 100%
   -webkit-text-size-adjust: 100%
@@ -79,7 +86,7 @@ html
 
 <style lang="sass" scoped>
 #app
-  font-family: Avenir, Helvetica, Arial, sans-serif
+  font-family: 'Source Sans 3', sans-serif
   -webkit-font-smoothing: antialiased
   -moz-osx-font-smoothing: grayscale
   text-align: center

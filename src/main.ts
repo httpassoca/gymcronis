@@ -1,11 +1,11 @@
 import Vue from 'vue';
-import App from './App.vue';
+import 'element-ui/lib/theme-chalk/index.css';
+import './registerServiceWorker';
+import './services/firebase';
+
 import router from './router';
 import store from './store';
-
-import './registerServiceWorker';
-import 'element-ui/lib/theme-chalk/index.css';
-import './services/firebase';
+import App from './App.vue';
 
 Vue.config.productionTip = false;
 
