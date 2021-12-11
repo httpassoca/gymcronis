@@ -1,13 +1,14 @@
 <template>
 <div id="app">
-  <Container v-if="username && $route.name !== 'Error'" id="app">
+  <Container v-if="user && $route.name !== 'Error'" id="app">
     <AppMenu
       v-model="collapseMenu"
       @change="collapseMenu = !collapseMenu"
     />
     <div class="flex-column" :style="{width: `calc(100% - ${collapseMenu ? 64 : 250}px)`}">
       <Header class="header">
-        <b>{{ username }}</b>
+        <b>{{ user.name }}</b>
+        <Avatar :src="user.photoURL || './assets/profile_pic.png'"/>
         <Tooltip effect="dark" content="Logout" placement="bottom-end">
           <svg @click="logout" stroke="#900000" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
         </Tooltip>
@@ -19,7 +20,7 @@
       </Main>
     </div>
   </Container>
-  <router-view v-else-if="!username || $route.name === 'Error'"/>
+  <router-view v-else-if="!user || $route.name === 'Error'"/>
   <AppToastArea/>
   <AppLoading v-if="loading"/>
 </div>
@@ -34,6 +35,7 @@ import {
   Container,
   Header,
   Tooltip,
+  Avatar,
 } from 'element-ui';
 import AppMenu from '@/components/AppMenu.vue';
 import AppToastArea from '@/components/AppToastArea.vue';
@@ -49,6 +51,7 @@ export default Vue.extend({
     AppMenu,
     AppToastArea,
     AppLoading,
+    Avatar,
   },
 
   data() {
@@ -58,7 +61,7 @@ export default Vue.extend({
   },
 
   computed: mapGetters({
-    username: 'user/userName',
+    user: 'user/user',
     loading: 'layout/loading',
   }),
 
@@ -116,6 +119,7 @@ html
     color: black
     margin-right: 12px
   svg
+    margin-left: 12px
     cursor: pointer
 .flex-column
   display: flex

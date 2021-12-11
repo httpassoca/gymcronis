@@ -5,18 +5,20 @@ It is kinda hard to understand at first time reading, but I will try to explain 
 
 ## The rules
 ```json
-"rules": {
-  "exercises": {
-    "$exercise": {
-      ".read": "auth != null",
-      ".write": "auth != null && (!data.exists() || data.child('authorId').val() == auth.id) && data.child('default').val() === false",
-    }
-  },
-  "workouts": {
-    "$workout": {
-      ".read": "auth != null && data.child('authorId').val() == auth.id",
-      ".write": "auth != null && (!data.exists() || data.child('authorId').val() == auth.id)",
-    }
+"exercises": {
+  ".write": "auth != null",
+  ".read": "auth != null",
+  "$exercise": {
+    ".read": "auth != null",
+    ".write": "auth != null && (!data.exists() || data.child('authorId').val() == auth.id) && data.child('default').val() === false",
+  }
+},
+"workouts": {
+  ".write": "auth != null",
+  ".read": "auth != null",
+  "$workout": {
+    ".read": "auth != null && data.child('authorId').val() == auth.id",
+    ".write": "auth != null && (!data.exists() || data.child('authorId').val() == auth.id)",
   }
 }
 ```

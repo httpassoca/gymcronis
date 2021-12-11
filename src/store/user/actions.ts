@@ -44,6 +44,7 @@ const actions: ActionTree<ModuleState, RootState> = {
   },
 
   checkAuth({ commit }) {
+    // https://firebase.google.com/docs/auth/web/manage-users#get_the_currently_signed-in_user
     commit('layout/SET_LOADING', true, { root: true });
     onAuthStateChanged(auth, async (user) => {
       if (!user || !user.displayName) {
@@ -53,6 +54,7 @@ const actions: ActionTree<ModuleState, RootState> = {
       const loggedUser: User = {
         name: user.displayName,
         id: user.uid,
+        photoURL: user.photoURL || undefined,
         token: await user.getIdToken(),
       };
       commit('SET_USER', loggedUser);
