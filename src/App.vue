@@ -89,7 +89,6 @@ export default Vue.extend({
   margin: 0
   padding: 0
   outline: 0
-  border: none !important
   box-sizing: border-box
 html
   font-size: 20px
@@ -98,7 +97,8 @@ html
   -webkit-text-size-adjust: 100%
   -moz-osx-font-smoothing: grayscale
   -webkit-font-smoothing: antialiased
-
+.full-w
+  width: 100%
 </style>
 
 <style lang="sass" scoped>
@@ -106,7 +106,6 @@ html
   font-family: 'Source Sans 3', sans-serif
   -webkit-font-smoothing: antialiased
   -moz-osx-font-smoothing: grayscale
-  text-align: center
   min-height: 100vh
 .header
   background-color: #c1c1c1

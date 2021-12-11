@@ -45,6 +45,8 @@ export default Vue.extend({
 </script>
 
 <style lang="sass">
+.menu
+  border-right: none
 .menu:not(.el-menu--collapse)
   width: 250px
 .menu > .el-menu-item

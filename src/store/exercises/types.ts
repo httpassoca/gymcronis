@@ -4,7 +4,7 @@ export type Exercise = {
   custom?: boolean;
   muscle: string;
   equipament?: string;
-  description?: string;
+  description: string;
   image?: string;
 }
 
