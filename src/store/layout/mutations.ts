@@ -10,7 +10,7 @@ const mutations: MutationTree<ModuleState> = {
       { ...payload, id: nextId += 1 },
     ];
 
-    Vue.set(state, 'loading', newNotifications);
+    Vue.set(state, 'notifications', newNotifications);
   },
 
   REMOVE_NOTIFICATION(state, notification: Notification) {
@@ -18,7 +18,7 @@ const mutations: MutationTree<ModuleState> = {
       toast: Notification,
     ) => toast.id !== notification.id);
 
-    Vue.set(state, 'loading', newNotifications);
+    Vue.set(state, 'notifications', newNotifications);
   },
 
   SET_LOADING(state, status: boolean) {
