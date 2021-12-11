@@ -1,31 +1,10 @@
 <template>
 <Container id="app">
-  <Menu
-    class="menu"
-    background-color="#900000"
-    active-text-color="#ffd04b"
-    :default-active="$route.path"
-    text-color="#fff"
-    router
-    :collapse="collapseMenu"
-  >
-    <MenuItem @click="collapseMenu = !collapseMenu">
-      <i :class="`el-icon-${collapseMenu ? 'menu' : 's-fold'}`"/>
-      <span slot="title">Close menu</span>
-    </MenuItem>
-    <MenuItem index="/workouts" route="/workouts">
-      <i class="el-icon-trophy"/>
-      <span slot="title">Workouts</span>
-    </MenuItem>
-    <MenuItem index="/exercises" route="/exercises">
-      <i class="el-icon-user-solid"/>
-      <span slot="title">Exercises</span>
-    </MenuItem>
-  </Menu>
+  <AppMenu v-model="collapseMenu" @change="collapseMenu = !collapseMenu"/>
   <div class="flex-column" :style="{width: `calc(100% - ${collapseMenu ? 64 : 250}px)`}">
     <Header class="header">
       <Tooltip effect="dark" content="Logout" placement="bottom-end">
-        <svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+        <svg @click="logout" stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
       </Tooltip>
     </Header>
     <Main>
@@ -39,25 +18,35 @@
 
 <script lang="ts">
 import Vue from 'vue';
+import { mapActions } from 'vuex';
 import {
-  Main, Menu, MenuItem, Container, Header, Tooltip,
+  Main, Container, Header, Tooltip,
 } from 'element-ui';
+import AppMenu from '@/components/AppMenu.vue';
 
 export default Vue.extend({
   name: 'App',
   components: {
-    Menu,
-    MenuItem,
+
     Container,
     Main,
     Header,
     Tooltip,
+    AppMenu,
   },
 
   data() {
     return {
       collapseMenu: false,
     };
+  },
+
+  methods: {
+    ...mapActions({ signOut: 'user/signOut' }),
+    async logout() {
+      await this.signOut();
+      this.$router.replace('/auth');
+    },
   },
 });
 </script>
@@ -76,8 +65,7 @@ html
   -webkit-text-size-adjust: 100%
   -moz-osx-font-smoothing: grayscale
   -webkit-font-smoothing: antialiased
-.menu:not(.el-menu--collapse)
-  width: 250px
+
 </style>
 
 <style lang="sass" scoped>
