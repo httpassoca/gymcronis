@@ -1,8 +1,10 @@
-import { onValue, push, ref } from 'firebase/database';
+import {
+  onValue, push, ref, remove,
+} from 'firebase/database';
 import { ActionTree } from 'vuex';
 import { auth, database } from '@/services/firebase';
 import { RootState } from '../types';
-import { ModuleState, Exercise } from './types';
+import { ModuleState, Exercise, DatabaseExercises } from './types';
 
 const actions: ActionTree<ModuleState, RootState> = {
   async create({ dispatch }, payload: Exercise): Promise<Exercise | null> {
@@ -41,17 +43,36 @@ const actions: ActionTree<ModuleState, RootState> = {
 
     const exercisesRef = ref(database, 'exercises');
     onValue(exercisesRef, (exercises) => {
-      if (!exercises.exists()) dispatch('layout/createNotification', { text: 'No exercises', type: 'bad' }, { root: true });
-      else {
-        const exercisesArray = Object.values(exercises.val());
-        commit('SET_EXERCISES', exercisesArray);
+      console.log('aa');
+      if (exercises.exists()) {
+        const exercisesInDatabase: DatabaseExercises = exercises.val();
+        const parsedExercises = Object.entries(exercisesInDatabase)
+          .map(([key, exercise]) => ({
+            id: key,
+            authorId: exercise.authorId,
+            name: exercise.name,
+            custom: exercise.custom,
+            muscle: exercise.muscle,
+            equipament: exercise.equipament,
+            description: exercise.description,
+            image: exercise.image,
+          }));
+        commit('SET_EXERCISES', parsedExercises);
+      } else {
+        commit('SET_EXERCISES', []);
       }
-    });
+    }, { onlyOnce: true });
   },
   // update({ commit }, payload: Exercise) {
   // },
-  // remove({ commit }, payload: Exercise) {
-  // },
+  async remove({ commit }, payload: string) {
+    // https://firebase.google.com/docs/database/web/read-and-write#updating_or_deleting_data
+
+    const exerciseId = payload;
+    const exercisesRef = ref(database, `exercises/${exerciseId}`);
+
+    await remove(exercisesRef);
+  },
 };
 
 export default actions;

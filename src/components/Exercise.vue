@@ -5,7 +5,7 @@
       <span>{{exercise.name}}</span>
       <div class="action--buttons">
         <i class="el-icon-edit"/>
-        <i class="el-icon-delete-solid"/>
+        <i @click="remove" class="el-icon-delete-solid"/>
       </div>
     </div>
   </div>
@@ -19,6 +19,7 @@
 
 <script lang="ts">
 import Vue from 'vue';
+import { mapActions } from 'vuex';
 import { Card, Tag, Button } from 'element-ui';
 
 export default Vue.extend({
@@ -36,6 +37,18 @@ export default Vue.extend({
     },
   },
 
+  methods: {
+    ...mapActions({
+      removeExercise: 'exercises/remove',
+      getExercises: 'exercises/get',
+    }),
+
+    async remove() {
+      await this.removeExercise(this.exercise.id);
+      await this.getExercises();
+    },
+  },
+
 });
 </script>
 
@@ -48,4 +61,6 @@ export default Vue.extend({
     gap: 12px
 .button
   margin: 12px auto 0 auto
+[class^="el-icon"]
+  cursor: pointer
 </style>

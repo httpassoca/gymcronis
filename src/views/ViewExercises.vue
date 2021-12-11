@@ -56,6 +56,7 @@ export default Vue.extend({
         muscle: 'muscle',
         name: 'name',
       });
+      await this.getExercises();
     },
   },
 
