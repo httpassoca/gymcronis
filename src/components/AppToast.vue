@@ -27,10 +27,10 @@ export default Vue.extend({
   },
 
   mounted() {
-    this.timeout = setTimeout(() => this.remove(this.notification), 3500);
+    this.timeout = setTimeout(() => this.removeNotification(this.notification), 3500);
   },
 
-  methods: mapActions('notification', ['remove']),
+  methods: mapActions('layout', ['removeNotification']),
 });
 </script>
 

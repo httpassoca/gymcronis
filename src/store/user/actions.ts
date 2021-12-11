@@ -36,7 +36,7 @@ const actions: ActionTree<ModuleState, RootState> = {
       .catch((err) => {
         console.log(err);
         dispatch(
-          'notification/create',
+          'layout/createNotification',
           { text: 'Login with Google Failed 😞', type: 'bad' },
           { root: true },
         );
@@ -44,6 +44,7 @@ const actions: ActionTree<ModuleState, RootState> = {
   },
 
   checkAuth({ commit }) {
+    commit('layout/SET_LOADING', true, { root: true });
     onAuthStateChanged(auth, async (user) => {
       if (!user || !user.displayName) {
         localStorage.removeItem('gymcronisUserToken');
@@ -56,6 +57,7 @@ const actions: ActionTree<ModuleState, RootState> = {
       };
       commit('SET_USER', loggedUser);
     });
+    commit('layout/SET_LOADING', false, { root: true });
   },
 
   async signOut({ commit }) {

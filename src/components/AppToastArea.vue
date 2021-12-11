@@ -7,9 +7,9 @@
   >
     <AppToast
       v-for="notification in notifications"
+      :notification="notification"
       :key="notification.id"
       class="notification"
-      :notification="notification"
     />
   </transition-group>
 </div>
@@ -17,7 +17,7 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import { mapState } from 'vuex';
+import { mapGetters } from 'vuex';
 import AppToast from '@/components/AppToast.vue';
 
 export default Vue.extend({
@@ -25,11 +25,12 @@ export default Vue.extend({
 
   components: { AppToast },
 
-  computed: mapState('notification', ['notifications']),
+  computed: mapGetters({ notifications: 'layout/notifications' }),
 });
 </script>
 
 <style lang="sass" scoped>
+
 .toast-area
   position: fixed
   top: 10px

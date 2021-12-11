@@ -3,19 +3,22 @@ import { RootState } from '../types';
 
 import actions from './actions';
 import mutations from './mutations';
+import getters from './getters';
 import { ModuleState } from './types';
 
 export const state: ModuleState = {
   notifications: [],
+  loading: false,
 };
 
 const namespaced = true;
 
-const notification: Module<ModuleState, RootState> = {
+const layout: Module<ModuleState, RootState> = {
   namespaced,
   state,
   mutations,
   actions,
+  getters,
 };
 
-export default notification;
+export default layout;

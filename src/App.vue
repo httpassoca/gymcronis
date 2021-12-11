@@ -19,8 +19,9 @@
       </Main>
     </div>
   </Container>
-  <router-view v-else/>
+  <router-view v-else-if="loaded && !username"/>
   <AppToastArea/>
+  <AppLoading v-if="loading"/>
 </div>
 </template>
 
@@ -36,6 +37,7 @@ import {
 } from 'element-ui';
 import AppMenu from '@/components/AppMenu.vue';
 import AppToastArea from '@/components/AppToastArea.vue';
+import AppLoading from '@/components/AppLoading.vue';
 
 export default Vue.extend({
   name: 'App',
@@ -46,21 +48,26 @@ export default Vue.extend({
     Tooltip,
     AppMenu,
     AppToastArea,
+    AppLoading,
   },
 
   data() {
     return {
       collapseMenu: false,
+      loaded: false,
     };
   },
 
-  computed: mapGetters({ username: 'user/userName' }),
+  computed: mapGetters({
+    username: 'user/userName',
+    loading: 'layout/loading',
+  }),
 
   methods: {
     ...mapActions({
       signOut: 'user/signOut',
       checkAuth: 'user/checkAuth',
-      createToast: 'notification/create',
+      createToast: 'layout/createNotification',
     }),
     async logout() {
       await this.signOut();
@@ -72,8 +79,9 @@ export default Vue.extend({
     },
   },
 
-  beforeMount() {
-    this.checkAuth();
+  async beforeMount() {
+    await this.checkAuth();
+    this.loaded = true;
   },
 });
 </script>
