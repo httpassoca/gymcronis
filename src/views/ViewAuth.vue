@@ -23,6 +23,7 @@
 <script lang="ts">
 import Vue from 'vue';
 import { Card, Button } from 'element-ui';
+import { mapActions } from 'vuex';
 
 export default Vue.extend({
   name: 'ViewAuth',
@@ -39,9 +40,10 @@ export default Vue.extend({
   },
 
   methods: {
+    ...mapActions({ signUp: 'user/signUp' }),
     async login() {
       this.isLoading = true;
-      const user = await this.$store.dispatch('user/signUp');
+      const user = await this.signUp();
       this.isLoading = false;
       if (user) {
         this.$router.replace('/workouts');
