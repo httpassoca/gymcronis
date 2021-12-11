@@ -30,7 +30,7 @@ const routes: Array<AppRoute> = [
     },
   },
   {
-    path: '/:wrongPage',
+    path: '*',
     name: 'Error',
     component: () => import('../views/ViewError.vue'),
     props: true,

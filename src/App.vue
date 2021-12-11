@@ -1,6 +1,6 @@
 <template>
 <div id="app">
-  <Container v-if="username" id="app">
+  <Container v-if="username && $route.name !== 'Error'" id="app">
     <AppMenu
       v-model="collapseMenu"
       @change="collapseMenu = !collapseMenu"
@@ -19,7 +19,7 @@
       </Main>
     </div>
   </Container>
-  <router-view v-else-if="loaded && !username"/>
+  <router-view v-else-if="!username || $route.name === 'Error'"/>
   <AppToastArea/>
   <AppLoading v-if="loading"/>
 </div>
@@ -54,7 +54,6 @@ export default Vue.extend({
   data() {
     return {
       collapseMenu: false,
-      loaded: false,
     };
   },
 
@@ -81,7 +80,6 @@ export default Vue.extend({
 
   async beforeMount() {
     await this.checkAuth();
-    this.loaded = true;
   },
 });
 </script>

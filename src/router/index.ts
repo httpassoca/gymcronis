@@ -18,6 +18,9 @@ router.beforeEach((to, from, next) => {
   if (to.matched.some((record) => record.meta.requiresAuth) && !isAuthenticated) {
     next({ name: 'Error', params: { error: '401' } });
   } else next();
+  if (to.matched.some((record) => record.name === 'Auth') && isAuthenticated) {
+    next({ path: '/workouts' });
+  } else next();
 });
 
 export default router;

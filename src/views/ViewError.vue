@@ -1,15 +1,19 @@
 <template>
 <div class="error">
   <Card>
-    <div v-if="wrongPage">
-      <h2>{{`Page "${this.wrongPage}" does not exist`}}</h2>
+    <div v-if="!error">
+      <h2>{{`Page "${$router.currentRoute.path}" does not exist`}}</h2>
       <p>Bro, here is lonely and empty. Go to a better place 🤜</p>
-      <Button @click="$router.replace('/workouts')"> Go to workouts page </Button>
+      <router-link :to="{name: 'Workouts'}">
+        <Button type="primary"> Go to workouts page </Button>
+      </router-link>
     </div>
     <div v-else-if="error === '401'">
       <h2> Unauthorized 🔐 </h2>
       <p>Seems you dont have access to this page...</p>
-      <Button type="primary" @click="$router.replace('/auth')"> Go to login page </Button>
+      <router-link :to="{name: 'Auth'}">
+        <Button type="primary"> Go to login page </Button>
+      </router-link>
     </div>
   </Card>
 </div>
@@ -28,12 +32,8 @@ export default Vue.extend({
   },
 
   props: {
-    wrongPage: {
-      type: String,
-    },
     error: {
       type: String,
-      default: '401',
     },
   },
 });
