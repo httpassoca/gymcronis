@@ -14,7 +14,7 @@ The initial setup was made with [Vue CLI](https://cli.vuejs.org/):
 Packages manually instalated:
 
 - [x] Element
-- [ ] Jest
+- [x] Jest
 - [x] Firebase
 
 ## Application Rules
@@ -36,6 +36,8 @@ Packages manually instalated:
 - [x] Protect routes
 - [x] Notifications
 - [ ] Loading app style
+- [ ] Add workouts module on vuex
+- [ ] Add exercises module on vuex
 - [ ] Config firebase db rules
 - [ ] Create firebase db structure
 - [ ] Add default exercises
@@ -46,7 +48,7 @@ Packages manually instalated:
 
 ## Features
 - [ ] Dark theme 🌙
-- [ ] Google Auth 🔐
+- [x] Google Auth 🔐
 - [ ] Profile page 🧔
 
 
