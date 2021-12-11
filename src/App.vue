@@ -20,6 +20,7 @@
     </div>
   </Container>
   <router-view v-else/>
+  <AppToastArea/>
 </div>
 </template>
 
@@ -34,6 +35,7 @@ import {
   Tooltip,
 } from 'element-ui';
 import AppMenu from '@/components/AppMenu.vue';
+import AppToastArea from '@/components/AppToastArea.vue';
 
 export default Vue.extend({
   name: 'App',
@@ -43,6 +45,7 @@ export default Vue.extend({
     Header,
     Tooltip,
     AppMenu,
+    AppToastArea,
   },
 
   data() {
@@ -54,9 +57,17 @@ export default Vue.extend({
   computed: mapGetters({ username: 'user/userName' }),
 
   methods: {
-    ...mapActions({ signOut: 'user/signOut', checkAuth: 'user/checkAuth' }),
+    ...mapActions({
+      signOut: 'user/signOut',
+      checkAuth: 'user/checkAuth',
+      createToast: 'notification/create',
+    }),
     async logout() {
       await this.signOut();
+      this.createToast({
+        text: 'Bye! 👋',
+        type: 'good',
+      });
       this.$router.replace('/auth');
     },
   },
