@@ -9,12 +9,13 @@ export enum UserMutations {
 
 const mutations: MutationTree<ModuleState> = {
   [UserMutations.SET_USER](state, payload: User) {
-    localStorage.setItem('gymcronisUserToken', payload.token);
-    Vue.set(state, 'user', payload);
-  },
-  [UserMutations.REMOVE_USER](state, payload: User) {
-    localStorage.setItem('gymcronisUserToken', '');
-    Vue.set(state, 'user', payload);
+    if (payload) {
+      localStorage.setItem('gymcronisUserToken', payload.token);
+      Vue.set(state, 'user', payload);
+    } else {
+      localStorage.removeItem('gymcronisUserToken');
+      Vue.set(state, 'user', null);
+    }
   },
 };
 
