@@ -27,7 +27,7 @@ export default Vue.extend({
   },
 
   mounted() {
-    this.timeout = setTimeout(() => this.removeNotification(this.notification), 3500);
+    this.timeout = setTimeout(() => this.removeNotification(this.notification), 1500);
   },
 
   methods: mapActions('layout', ['removeNotification']),
@@ -45,10 +45,11 @@ export default Vue.extend({
   border-radius: 5px
   width: 300px
   padding: 12px
+  font-size: 16px
   color: white
   box-shadow: 0 0 6px -1px rgba(0,0,0,.7)
   animation: .5s disappear
-  animation-delay: 3s
+  animation-delay: 1s
   background-color: #900000
   &.good
     background-color: #228C22
