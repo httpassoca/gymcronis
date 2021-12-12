@@ -30,6 +30,14 @@ const routes: Array<AppRoute> = [
     },
   },
   {
+    path: '/exercise/:id',
+    name: 'Exercise',
+    component: () => import('../views/ViewExercise.vue'),
+    meta: {
+      requiresAuth: true,
+    },
+  },
+  {
     path: '*',
     name: 'Error',
     component: () => import('../views/ViewError.vue'),

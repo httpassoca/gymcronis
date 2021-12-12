@@ -4,9 +4,6 @@
     <div class="header">
       <span>{{exercise.name}}</span>
       <div v-if="user.id === exercise.authorId" class="action--buttons">
-        <Tooltip effect="dark" content="Edit" placement="top">
-          <i class="el-icon-edit"/>
-        </Tooltip>
         <Tooltip effect="dark" content="Remove" placement="top">
           <i @click="remove" class="el-icon-delete-solid"/>
         </Tooltip>
@@ -25,7 +22,7 @@
       {{ exercise.description }}
     </p>
   </div>
-  <Button class="button"> See more </Button>
+  <Button class="button" @click="$router.replace(`/exercise/${exercise.id}`)"> See more </Button>
 </Card>
 </template>
 
@@ -75,10 +72,10 @@ export default Vue.extend({
   .action--buttons
     display: flex
     gap: 12px
+    > *
+      cursor: pointer
 .button
   margin: 12px auto 0 auto
-[class^="el-icon"]
-  cursor: pointer
 .description
   text-overflow: ellipsis
   overflow: hidden
