@@ -33,7 +33,7 @@ export default Vue.extend({
 
 .toast-area
   position: fixed
-  top: 10px
+  bottom: 10px
   right: 10px
   z-index: 9999
 

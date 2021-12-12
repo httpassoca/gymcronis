@@ -1,5 +1,5 @@
 <template>
-<div class="toast" :class="notification.type">
+<div class="toast" :class="notification.type" @click="removeNotification(notification)">
   <span>{{ notification.text }}</span>
   <i v-if="notification.type === 'good'" class="el-icon-circle-check"/>
   <i v-if="notification.type === 'bad'" class="el-icon-circle-close"/>

@@ -1,10 +1,12 @@
 import {
-  onValue, orderByChild, push, ref, remove, query, startAt, endAt,
+  onValue, orderByChild, push, ref, remove, query, startAt, endAt, limitToFirst,
 } from 'firebase/database';
 import { ActionTree } from 'vuex';
 import { auth, database } from '@/services/firebase';
 import { RootState } from '../types';
-import { ModuleState, Exercise, DatabaseExercises } from './types';
+import {
+  ModuleState, Exercise, DatabaseExercises,
+} from './types';
 
 const actions: ActionTree<ModuleState, RootState> = {
   async create({ dispatch }, payload: Exercise): Promise<Exercise | null> {
@@ -40,15 +42,16 @@ const actions: ActionTree<ModuleState, RootState> = {
   },
   get({ commit }, payload: string) {
     // https://firebase.google.com/docs/database/web/read-and-write#read_data
+    // https://stackoverflow.com/questions/38618953/how-to-do-a-simple-search-in-string-in-firebase-database
 
+    const search = payload;
     const exercisesRef = query(
       ref(database, 'exercises'),
       orderByChild('name'),
-      startAt(payload),
+      startAt(search),
       endAt(`${payload}\uf8ff`),
     );
     onValue(exercisesRef, (exercises) => {
-      console.log('aa');
       if (exercises.exists()) {
         const exercisesInDatabase: DatabaseExercises = exercises.val();
         const parsedExercises = Object.entries(exercisesInDatabase)

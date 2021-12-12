@@ -61,7 +61,7 @@ export default Vue.extend({
         muscle: 'muscle',
         name: 'name',
       });
-      await this.getExercises('');
+      await this.getExercises();
     },
 
     async searchExercise() {
@@ -70,7 +70,7 @@ export default Vue.extend({
   },
 
   beforeMount() {
-    this.getExercises('');
+    this.getExercises();
   },
 });
 </script>
@@ -78,10 +78,18 @@ export default Vue.extend({
 <style lang="sass" scoped>
 .exercises
   display: grid
-  grid-template-columns: 1fr 1fr 1fr
+  grid-template-columns: 1fr
   grid-gap: 20px 25px
   width: 100%
   margin: 12px 0
+  @media (min-width: 750px)
+    grid-template-columns: repeat(2, 1fr)
+  @media (min-width: 1050px)
+    grid-template-columns: repeat(3, 1fr)
+  @media (min-width: 1400px)
+    grid-template-columns: repeat(4, 1fr)
+  @media (min-width: 1700px)
+    grid-template-columns: repeat(5, 1fr)
 .header
   width: 100%
   display: flex
