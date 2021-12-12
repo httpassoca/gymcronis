@@ -4,12 +4,16 @@
     <div class="header">
       <span>{{exercise.name}}</span>
       <div v-if="user.id === exercise.authorId" class="action--buttons">
-        <i class="el-icon-edit"/>
-        <i @click="remove" class="el-icon-delete-solid"/>
+        <Tooltip effect="dark" content="Edit" placement="top">
+          <i class="el-icon-edit"/>
+        </Tooltip>
+        <Tooltip effect="dark" content="Remove" placement="top">
+          <i @click="remove" class="el-icon-delete-solid"/>
+        </Tooltip>
       </div>
     </div>
   </div>
-  <div>
+  <div class="exercise-info">
     <Tag
       v-for="(muscle, i) in exercise.muscles"
       :key="i"
@@ -17,7 +21,7 @@
     >
       {{ muscle }}
     </Tag>
-    <p>
+    <p class="description">
       {{ exercise.description }}
     </p>
   </div>
@@ -28,7 +32,9 @@
 <script lang="ts">
 import Vue from 'vue';
 import { mapActions, mapGetters } from 'vuex';
-import { Card, Tag, Button } from 'element-ui';
+import {
+  Card, Tag, Button, Tooltip,
+} from 'element-ui';
 
 export default Vue.extend({
   name: 'Exercise',
@@ -36,6 +42,7 @@ export default Vue.extend({
     Card,
     Tag,
     Button,
+    Tooltip,
   },
 
   props: {
@@ -72,4 +79,19 @@ export default Vue.extend({
   margin: 12px auto 0 auto
 [class^="el-icon"]
   cursor: pointer
+.description
+  text-overflow: ellipsis
+  overflow: hidden
+  display: -webkit-box
+  -webkit-line-clamp: 3
+  -webkit-box-orient: vertical
+  font-size: 16px
+  margin-top: 12px
+.tag
+  margin: 6px
+</style>
+
+<style lang="sass">
+.exercise-info .el-tag
+  margin-right: 6px
 </style>

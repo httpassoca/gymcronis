@@ -40,6 +40,7 @@ Packages manually instalated:
 - [ ] Add workouts module on vuex
 - [x] Config firebase db rules
 - [x] Create firebase db structure
+- [x] Add validation!
 - [ ] Add default exercises
 - [ ] Add exercises CRUD
 - [ ] Add workouts CRUD
