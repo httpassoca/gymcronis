@@ -1,9 +1,14 @@
 <template>
 <div class="full-w">
   <div class="header">
-    <Form class="form">
+    <Form class="form" @submit.prevent.native="searchExercise">
       <Input v-model="search" placeholder="Search for a exercise..."/>
-      <Button icon="el-icon-search" circle type="primary"/>
+      <Button
+        @click="searchExercise"
+        icon="el-icon-search"
+        type="primary"
+        circle
+      />
     </Form>
     <div class="buttons">
       <Button type="primary" @click="create">Create exercise</Button>
@@ -56,12 +61,16 @@ export default Vue.extend({
         muscle: 'muscle',
         name: 'name',
       });
-      await this.getExercises();
+      await this.getExercises('');
+    },
+
+    async searchExercise() {
+      this.getExercises(this.search);
     },
   },
 
   beforeMount() {
-    this.getExercises();
+    this.getExercises('');
   },
 });
 </script>

@@ -1,5 +1,5 @@
 import {
-  onValue, push, ref, remove,
+  onValue, orderByChild, push, ref, remove, query, startAt, endAt,
 } from 'firebase/database';
 import { ActionTree } from 'vuex';
 import { auth, database } from '@/services/firebase';
@@ -38,10 +38,15 @@ const actions: ActionTree<ModuleState, RootState> = {
 
     return firebaseExercise;
   },
-  get({ commit, dispatch }, payload: string) {
+  get({ commit }, payload: string) {
     // https://firebase.google.com/docs/database/web/read-and-write#read_data
 
-    const exercisesRef = ref(database, 'exercises');
+    const exercisesRef = query(
+      ref(database, 'exercises'),
+      orderByChild('name'),
+      startAt(payload),
+      endAt(`${payload}\uf8ff`),
+    );
     onValue(exercisesRef, (exercises) => {
       console.log('aa');
       if (exercises.exists()) {
@@ -65,7 +70,7 @@ const actions: ActionTree<ModuleState, RootState> = {
   },
   // update({ commit }, payload: Exercise) {
   // },
-  async remove({ commit }, payload: string) {
+  async remove(state, payload: string) {
     // https://firebase.google.com/docs/database/web/read-and-write#updating_or_deleting_data
 
     const exerciseId = payload;
