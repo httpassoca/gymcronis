@@ -8,6 +8,7 @@ import { ModuleState } from './types';
 
 export const state: ModuleState = {
   exercises: [],
+  exercise: null,
 };
 
 const namespaced = true;

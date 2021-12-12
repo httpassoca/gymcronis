@@ -13,4 +13,5 @@ export type DatabaseExercises = Record<string, Exercise>;
 
 export type ModuleState = {
   exercises: Exercise[],
+  exercise: Exercise | null,
 }

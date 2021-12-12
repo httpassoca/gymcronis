@@ -59,14 +59,27 @@ const actions: ActionTree<ModuleState, RootState> = {
             id: key,
             authorId: exercise.authorId,
             name: exercise.name,
-            custom: exercise.custom,
             muscles: exercise.muscles,
             description: exercise.description,
-            image: exercise.image,
           }));
         commit('SET_EXERCISES', parsedExercises.reverse());
       } else {
         commit('SET_EXERCISES', []);
+      }
+    }, { onlyOnce: true });
+  },
+  getById({ dispatch, commit }, payload: string) {
+    const id = payload;
+    const exerciseRef = ref(database, `exercises/${id}`);
+    onValue(exerciseRef, (exercise) => {
+      if (exercise.exists()) commit('SET_EXERCISE', exercise.val());
+      else {
+        dispatch(
+          'layout/createNotification',
+          { text: 'exercise not found ', type: 'bad' },
+          { root: true },
+        );
+        commit('SET_EXERCISE', null);
       }
     }, { onlyOnce: true });
   },
