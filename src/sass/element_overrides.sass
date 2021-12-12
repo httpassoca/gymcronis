@@ -1,0 +1,52 @@
+.customStyle
+  .el-button
+    &:focus, &:hover
+      color: #900000
+      border-color: #ffc6c6
+      background-color: #ffecec
+    &.el-button--primary
+      background-color: #900000
+      border-color: #900000
+      &:hover
+        color: white
+        background-color: #BD0707
+        border-color: #BD0707
+  .el-checkbox__input
+    &.is-checked
+      color: #900000
+      + .el-checkbox__label
+        color: #900000
+      .el-checkbox__inner
+        background-color: #900000
+        border-color: #900000
+        
+    &.is-indeterminate
+      .el-checkbox__inner
+        background-color: #900000
+        border-color: #900000
+    
+    &.is-focus
+      .el-checkbox__inner
+        border-color: #900000 
+
+    .el-checkbox__inner
+      &.is-focus
+        border-color: #900000 
+      &:hover, &:focus
+        border-color: #900000
+  .el-textarea__inner:focus
+    border-color: #900000
+  .el-input__inner:focus
+    border-color: #900000
+
+  .el-dialog__headerbtn
+    &:focus, &:hover 
+      .el-dialog__close
+        color: #900000
+
+
+  .el-tag
+    color: #900000
+    background-color: #ffecec
+    border-color: #ffd9d9
+    

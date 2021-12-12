@@ -10,8 +10,16 @@
     </div>
   </div>
   <div>
-    <Tag>{{ exercise.muscle }}</Tag>
-    {{ exercise.description }}
+    <Tag
+      v-for="(muscle, i) in exercise.muscles"
+      :key="i"
+      size="mini"
+    >
+      {{ muscle }}
+    </Tag>
+    <p>
+      {{ exercise.description }}
+    </p>
   </div>
   <Button class="button"> See more </Button>
 </Card>

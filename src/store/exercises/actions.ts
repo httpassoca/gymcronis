@@ -60,8 +60,7 @@ const actions: ActionTree<ModuleState, RootState> = {
             authorId: exercise.authorId,
             name: exercise.name,
             custom: exercise.custom,
-            muscle: exercise.muscle,
-            equipament: exercise.equipament,
+            muscles: exercise.muscles,
             description: exercise.description,
             image: exercise.image,
           }));

@@ -1,5 +1,5 @@
 <template>
-<div id="app">
+<div id="app" class="customStyle">
   <Container v-if="user && $route.name !== 'Error'" id="app">
     <AppMenu
       v-model="collapseMenu"
@@ -85,6 +85,8 @@ export default Vue.extend({
 </script>
 
 <style lang="sass">
+@import './sass/element_overrides'
+
 *
   margin: 0
   padding: 0

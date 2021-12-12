@@ -3,8 +3,7 @@ export type Exercise = {
   authorId: string;
   name: string;
   custom?: boolean;
-  muscle: string;
-  equipament?: string;
+  muscles?: string[];
   description: string;
   image?: string;
 }
