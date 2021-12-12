@@ -78,15 +78,23 @@ const actions: ActionTree<ModuleState, RootState> = {
     const exerciseId = payload;
     const exercisesRef = ref(database, `exercises/${exerciseId}`);
 
-    await remove(exercisesRef).catch((err) => {
-      if (err.code === 'PERMISSION_DENIED') {
+    await remove(exercisesRef)
+      .then(() => {
         dispatch(
           'layout/createNotification',
-          { text: 'You cannot remove a exercise that isnt yours 💁‍♂️ ', type: 'bad' },
+          { text: 'Exercise removed! ', type: 'good' },
           { root: true },
         );
-      }
-    });
+      })
+      .catch((err) => {
+        if (err.code === 'PERMISSION_DENIED') {
+          dispatch(
+            'layout/createNotification',
+            { text: 'You cannot remove a exercise that isnt yours 💁‍♂️ ', type: 'bad' },
+            { root: true },
+          );
+        }
+      });
   },
 };
 
