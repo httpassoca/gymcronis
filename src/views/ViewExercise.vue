@@ -2,13 +2,18 @@
 <div class="full-w" v-if="exercise">
   <div class="header">
     <div>
-      <PageHeader @back="$router.replace('/exercises')" title="Exercises" :content="exercise.name"/>
+      <PageHeader
+        @back="goBack"
+        :content="exercise.name"
+        title="Exercises"
+      />
     </div>
     <Button
-      type="primary"
-      @click="showCreateDialog = true"
-      icon="el-icon-edit"
+      v-if="user.id === exercise.authorId"
+      @click="showUpdateDialog = true"
       class="button--edit"
+      icon="el-icon-edit"
+      type="primary"
     >
       Edit exercise
     </Button>
@@ -58,13 +63,24 @@ export default Vue.extend({
     };
   },
 
-  computed: mapGetters({ exercise: 'exercises/exercise' }),
+  computed: mapGetters({
+    exercise: 'exercises/exercise',
+    user: 'user/user',
+  }),
 
   methods: {
-    ...mapActions({ getExercise: 'exercises/getById' }),
+    ...mapActions({
+      getExercise: 'exercises/getById',
+      removeExercise: 'exercises/removeActual',
+    }),
 
     async updatedExercise() {
       this.showUpdateDialog = false;
+    },
+
+    goBack() {
+      this.removeExercise();
+      this.$router.replace('/exercises');
     },
   },
 

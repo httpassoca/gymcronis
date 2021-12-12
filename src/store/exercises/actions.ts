@@ -109,6 +109,9 @@ const actions: ActionTree<ModuleState, RootState> = {
         }
       });
   },
+  removeActual({ commit }) {
+    commit('SET_EXERCISE', null);
+  },
 };
 
 export default actions;
