@@ -12,7 +12,7 @@
     </Form>
     <Button
       type="primary"
-      @click="showDialog = true"
+      @click="showCreateDialog = true"
       icon="el-icon-plus"
       class="button--create"
     >
@@ -26,67 +26,21 @@
       :exercise="exercise"
     />
   </div>
-  <Dialog
-    :visible.sync="showDialog"
-    title="Create an exercise"
-  >
-    <Form
-      :model="formCreate"
-      class="formCreate"
-      ref="formCreate"
-      size="small"
-      :rules="rules"
-    >
-      <FormItem label="Name" prop="name">
-        <Input
-          v-model="formCreate.name"
-          placeholder="Push up"
-        />
-      </FormItem>
-      <FormItem label="Muscles" class="flex-col" prop="muscles">
-        <CheckboxGroup v-model="formCreate.muscles">
-          <Checkbox label="Shoulders" name="muscle"/>
-          <Checkbox label="Chest" name="muscle"/>
-          <Checkbox label="Backs" name="muscle"/>
-          <Checkbox label="Arms" name="muscle"/>
-          <Checkbox label="Core muscles" name="muscle"/>
-          <Checkbox label="Legs" name="muscle"/>
-        </CheckboxGroup>
-      </FormItem>
-      <FormItem label="Image url">
-        <Input v-model="formCreate.image"/>
-      </FormItem>
-      <FormItem label="Description" prop="description">
-        <Input
-          v-model="formCreate.description"
-          type="textarea"
-          placeholder="Push the ground! Not with your foot, bro, with the hands."
-        />
-      </FormItem>
-    </Form>
-    <span slot="footer" class="dialog-footer">
-      <Button @click="cancelForm">Cancel</Button>
-      <Button type="primary" @click="submitForm">Confirm</Button>
-    </span>
-  </Dialog>
+  <ExerciseCreateDialog
+    v-model="showCreateDialog"
+    @created="createdExercise"
+    @canceled="showCreateDialog = false"
+  />
 </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
 import { mapGetters, mapActions } from 'vuex';
-import {
-  Button, Input, Dialog, Form, FormItem, CheckboxGroup, Checkbox,
-} from 'element-ui';
+import { Button, Input, Form } from 'element-ui';
 
-import Exercise from '@/components/Exercise.vue';
-
-// https://stackoverflow.com/questions/52109471/typescript-in-vue-property-validate-does-not-exist-on-type-vue-element
-type formType = Vue & {
-  validate: () => Promise<boolean>;
-  resetValidation: () => boolean;
-  resetFields: () => void;
-};
+import Exercise from '@/components/Exercises/Exercise.vue';
+import ExerciseCreateDialog from '@/components/Exercises/ExerciseCreateDialog.vue';
 
 export default Vue.extend({
   name: 'ViewExercises',
@@ -95,72 +49,30 @@ export default Vue.extend({
     Button,
     Exercise,
     Form,
-    FormItem,
     Input,
-    Dialog,
-    CheckboxGroup,
-    Checkbox,
+    ExerciseCreateDialog,
   },
 
   data() {
     return {
       search: '',
-      showDialog: false,
-      formCreate: {
-        name: '',
-        description: '',
-        image: '',
-        muscles: ['Chest', 'Arms'],
-      },
-      rules: {
-        name: [{
-          required: true,
-          message: 'Please input Exercise name',
-          trigger: 'blur',
-        }],
-        description: [{
-          required: true,
-          message: 'Please input a description',
-          trigger: 'blur',
-        }],
-        muscles: [{
-          type: 'array',
-          required: true,
-          message: 'Please select at least one muscle',
-          trigger: 'change',
-        }],
-      },
+      showCreateDialog: false,
+      showUpdateDialog: false,
     };
   },
 
-  computed: {
-    ...mapGetters({ exercises: 'exercises/exercises' }),
-    formRef(): formType {
-      return this.$refs.formCreate as formType;
-    },
-  },
+  computed: mapGetters({ exercises: 'exercises/exercises' }),
 
   methods: {
-    ...mapActions({
-      createExercise: 'exercises/create',
-      getExercises: 'exercises/get',
-    }),
+    ...mapActions({ getExercises: 'exercises/get' }),
 
-    cancelForm() {
-      this.showDialog = false;
-      this.formRef.resetFields();
+    async createdExercise() {
+      this.showCreateDialog = false;
+      await this.getExercises();
     },
 
-    async submitForm() {
-      const valid = await this.formRef.validate();
-      if (valid) {
-        this.create();
-        this.cancelForm();
-      }
-    },
-
-    async create() {
-      await this.createExercise(this.formCreate);
+    async updatedExercise() {
+      this.showUpdateDialog = false;
       await this.getExercises();
     },
 
@@ -203,10 +115,6 @@ export default Vue.extend({
 </style>
 
 <style lang="sass">
-.formCreate .el-form-item
+.exercises .form .el-form-item
   margin-bottom: 12px !important
-.flex-col
-  display: flex
-  flex-direction: column
-  align-items: flex-start
 </style>
