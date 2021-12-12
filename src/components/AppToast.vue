@@ -51,6 +51,8 @@ export default Vue.extend({
   animation: .5s disappear
   animation-delay: 1s
   background-color: #900000
+  i
+    font-size: 1.125rem
   &.good
     background-color: #228C22
 

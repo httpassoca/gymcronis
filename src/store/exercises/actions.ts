@@ -1,5 +1,5 @@
 import {
-  onValue, orderByChild, push, ref, remove, query, startAt, endAt, limitToFirst,
+  onValue, orderByChild, push, ref, remove, query, startAt, endAt,
 } from 'firebase/database';
 import { ActionTree } from 'vuex';
 import { auth, database } from '@/services/firebase';
@@ -30,7 +30,7 @@ const actions: ActionTree<ModuleState, RootState> = {
     await push(exerciseRef, firebaseExercise)
       .then(() => dispatch('layout/createNotification', { text: 'Exercise created 😁', type: 'good' }, { root: true }))
       .catch((err) => {
-        console.log(err);
+        console.log(err.code);
         dispatch(
           'layout/createNotification',
           { text: 'Failed to create exercise 😞 ', type: 'bad' },
@@ -65,7 +65,7 @@ const actions: ActionTree<ModuleState, RootState> = {
             description: exercise.description,
             image: exercise.image,
           }));
-        commit('SET_EXERCISES', parsedExercises);
+        commit('SET_EXERCISES', parsedExercises.reverse());
       } else {
         commit('SET_EXERCISES', []);
       }
@@ -73,13 +73,21 @@ const actions: ActionTree<ModuleState, RootState> = {
   },
   // update({ commit }, payload: Exercise) {
   // },
-  async remove(state, payload: string) {
+  async remove({ dispatch }, payload: string) {
     // https://firebase.google.com/docs/database/web/read-and-write#updating_or_deleting_data
 
     const exerciseId = payload;
     const exercisesRef = ref(database, `exercises/${exerciseId}`);
 
-    await remove(exercisesRef);
+    await remove(exercisesRef).catch((err) => {
+      if (err.code === 'PERMISSION_DENIED') {
+        dispatch(
+          'layout/createNotification',
+          { text: 'You cannot remove a exercise that isnt yours 💁‍♂️ ', type: 'bad' },
+          { root: true },
+        );
+      }
+    });
   },
 };
 

@@ -3,7 +3,7 @@
   <div slot="header">
     <div class="header">
       <span>{{exercise.name}}</span>
-      <div class="action--buttons">
+      <div v-if="user.id === exercise.authorId" class="action--buttons">
         <i class="el-icon-edit"/>
         <i @click="remove" class="el-icon-delete-solid"/>
       </div>
@@ -19,7 +19,7 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import { mapActions } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
 import { Card, Tag, Button } from 'element-ui';
 
 export default Vue.extend({
@@ -37,6 +37,8 @@ export default Vue.extend({
     },
   },
 
+  computed: mapGetters({ user: 'user/user' }),
+
   methods: {
     ...mapActions({
       removeExercise: 'exercises/remove',
@@ -48,7 +50,6 @@ export default Vue.extend({
       await this.getExercises();
     },
   },
-
 });
 </script>
 
