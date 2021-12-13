@@ -40,6 +40,7 @@ const actions: ActionTree<ModuleState, RootState> = {
 
     return firebaseExercise;
   },
+
   get({ commit }, payload: string) {
     // https://firebase.google.com/docs/database/web/read-and-write#read_data
     // https://stackoverflow.com/questions/38618953/how-to-do-a-simple-search-in-string-in-firebase-database
@@ -68,6 +69,7 @@ const actions: ActionTree<ModuleState, RootState> = {
       }
     }, { onlyOnce: true });
   },
+
   getById({ dispatch, commit }, payload: string) {
     const id = payload;
     const exerciseRef = ref(database, `exercises/${id}`);
@@ -83,6 +85,7 @@ const actions: ActionTree<ModuleState, RootState> = {
       }
     }, { onlyOnce: true });
   },
+
   async update({ dispatch }, payload: Exercise) {
     const exerciseRef = ref(database, `exercises/${payload.id}`);
     await set(exerciseRef, payload)
@@ -91,6 +94,7 @@ const actions: ActionTree<ModuleState, RootState> = {
       });
     dispatch('getById', payload.id);
   },
+
   async remove({ dispatch }, payload: string) {
     // https://firebase.google.com/docs/database/web/read-and-write#updating_or_deleting_data
 
@@ -115,6 +119,7 @@ const actions: ActionTree<ModuleState, RootState> = {
         }
       });
   },
+
   removeActual({ commit }) {
     commit('SET_EXERCISE', null);
   },
