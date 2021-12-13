@@ -26,6 +26,7 @@ const actions: ActionTree<ModuleState, RootState> = {
         const user: User = {
           name: credentials.user.displayName,
           id: credentials.user.uid,
+          photoURL: credentials.user.photoURL,
           token: await credentials.user.getIdToken(),
         };
 
@@ -54,7 +55,7 @@ const actions: ActionTree<ModuleState, RootState> = {
       const loggedUser: User = {
         name: user.displayName,
         id: user.uid,
-        photoURL: user.photoURL || undefined,
+        photoURL: user.photoURL,
         token: await user.getIdToken(),
       };
       commit('SET_USER', loggedUser);
