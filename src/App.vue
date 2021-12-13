@@ -15,12 +15,16 @@
       </Header>
       <Main>
         <Container>
-          <router-view/>
+          <transition name="fade" mode="out-in">
+            <router-view/>
+          </transition>
         </Container>
       </Main>
     </div>
   </Container>
-  <router-view v-else-if="!user || $route.name === 'Error'"/>
+  <transition name="fade" mode="out-in">
+    <router-view v-if="!user || $route.name === 'Error'"/>
+  </transition>
   <AppToastArea/>
   <AppLoading v-if="loading"/>
 </div>
@@ -125,4 +129,13 @@ html
 .flex-column
   display: flex
   flex-direction: column
+
+.fade-enter-active, .fade-leave-active
+  transition-duration: 0.3s
+  transition-property: opacity
+  transition-timing-function: ease
+
+.fade-enter, .fade-leave-active
+  opacity: 0
+
 </style>
