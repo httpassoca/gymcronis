@@ -19,13 +19,14 @@
       Create exercise
     </Button>
   </div>
-  <div class="exercises">
+  <div v-if="exercises.length" v-loading="loading" class="exercises">
     <Exercise
       v-for="(exercise, i) in exercises"
       :key="i"
       :exercise="exercise"
     />
   </div>
+  <Empty v-else description="0 exercises found" />
   <ExerciseCreateDialog
     v-model="showCreateDialog"
     @created="createdExercise"
@@ -37,10 +38,13 @@
 <script lang="ts">
 import Vue from 'vue';
 import { mapGetters, mapActions } from 'vuex';
-import { Button, Input, Form } from 'element-ui';
-
+import {
+  Button, Input, Form, Loading, Empty,
+} from 'element-ui';
 import Exercise from '@/components/Exercises/Exercise.vue';
 import ExerciseCreateDialog from '@/components/Exercises/ExerciseCreateDialog.vue';
+
+Vue.use(Loading.directive);
 
 export default Vue.extend({
   name: 'ViewExercises',
@@ -50,6 +54,7 @@ export default Vue.extend({
     Exercise,
     Form,
     Input,
+    Empty,
     ExerciseCreateDialog,
   },
 
@@ -77,12 +82,12 @@ export default Vue.extend({
     },
 
     async searchExercise() {
-      this.getExercises(this.search);
+      await this.getExercises(this.search);
     },
   },
 
-  beforeMount() {
-    this.getExercises();
+  async mounted() {
+    await this.getExercises();
   },
 });
 </script>
