@@ -1,0 +1,133 @@
+<template>
+<Dialog
+  :visible.sync="value"
+  title="Edit exercise"
+>
+  <Form
+    :rules="rules"
+    :model="form"
+    size="small"
+    ref="form"
+  >
+    <FormItem label="Name" prop="name">
+      <Input
+        v-model="form.name"
+        placeholder="Push up"
+      />
+    </FormItem>
+    <FormItem label="Muscles" class="flex-col" prop="muscles">
+      <CheckboxGroup v-model="form.muscles">
+        <Checkbox label="Shoulders" name="muscle"/>
+        <Checkbox label="Chest" name="muscle"/>
+        <Checkbox label="Backs" name="muscle"/>
+        <Checkbox label="Arms" name="muscle"/>
+        <Checkbox label="Core muscles" name="muscle"/>
+        <Checkbox label="Legs" name="muscle"/>
+      </CheckboxGroup>
+    </FormItem>
+    <FormItem label="Image url">
+      <Input v-model="form.image"/>
+    </FormItem>
+    <FormItem label="Description" prop="description">
+      <Input
+        v-model="form.description"
+        type="textarea"
+        placeholder="Push the ground! Not with your foot, bro, with the hands."
+      />
+    </FormItem>
+  </Form>
+  <span slot="footer" class="dialog-footer">
+    <Button @click="$emit('canceled')">Cancel</Button>
+    <Button type="primary" @click="submitForm">Confirm</Button>
+  </span>
+</Dialog>
+</template>
+
+<script lang="ts">
+import Vue from 'vue';
+import { mapActions } from 'vuex';
+import {
+  Button,
+  Form,
+  FormItem,
+  Input,
+  Dialog,
+  CheckboxGroup,
+  Checkbox,
+} from 'element-ui';
+
+import { formType } from '../types';
+
+export default Vue.extend({
+  name: 'ExerciseUpdateDialog',
+
+  components: {
+    Form,
+    FormItem,
+    Input,
+    Dialog,
+    CheckboxGroup,
+    Checkbox,
+    Button,
+  },
+
+  props: {
+    value: Boolean,
+    exercise: {
+      type: Object,
+      required: true,
+    },
+  },
+
+  data() {
+    return {
+      form: {
+        name: '',
+        description: '',
+        image: '',
+        muscles: ['Chest', 'Arms'],
+      },
+      rules: {
+        name: [{
+          required: true,
+          message: 'Please input Exercise name',
+          trigger: 'blur',
+        }],
+        description: [{
+          required: true,
+          message: 'Please input a description',
+          trigger: 'blur',
+        }],
+        muscles: [{
+          type: 'array',
+          required: true,
+          message: 'Please select at least one muscle',
+          trigger: 'change',
+        }],
+      },
+    };
+  },
+
+  computed: {
+    formRef(): formType {
+      return this.$refs.form as formType;
+    },
+  },
+
+  methods: {
+    ...mapActions({ updateExercise: 'exercises/update' }),
+
+    async submitForm() {
+      const valid = await this.formRef.validate();
+      if (valid) {
+        this.updateExercise(this.form);
+        this.$emit('updated');
+      }
+    },
+  },
+
+  mounted() {
+    this.form = { ...this.exercise, id: this.$route.params.id };
+  },
+});
+</script>

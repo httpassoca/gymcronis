@@ -1,5 +1,5 @@
 import {
-  onValue, orderByChild, push, ref, remove, query, startAt, endAt,
+  onValue, orderByChild, push, ref, remove, query, startAt, endAt, set,
 } from 'firebase/database';
 import { ActionTree } from 'vuex';
 import { auth, database } from '@/services/firebase';
@@ -83,8 +83,14 @@ const actions: ActionTree<ModuleState, RootState> = {
       }
     }, { onlyOnce: true });
   },
-  // update({ commit }, payload: Exercise) {
-  // },
+  async update({ dispatch }, payload: Exercise) {
+    const exerciseRef = ref(database, `exercises/${payload.id}`);
+    await set(exerciseRef, payload)
+      .catch((err) => {
+        console.log(err.code);
+      });
+    dispatch('getById', payload.id);
+  },
   async remove({ dispatch }, payload: string) {
     // https://firebase.google.com/docs/database/web/read-and-write#updating_or_deleting_data
 

@@ -34,6 +34,7 @@
 
   <ExerciseUpdateDialog
     v-model="showUpdateDialog"
+    :exercise="exercise"
     @updated="updatedExercise"
     @canceled="showUpdateDialog = false"
   />
@@ -95,6 +96,7 @@ export default Vue.extend({
   width: 100%
   display: flex
   justify-content: space-between
+  margin-bottom: 12px
 .exercise-info
   max-width: 800px
 img

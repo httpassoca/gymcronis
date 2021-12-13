@@ -8,6 +8,9 @@ export type Exercise = {
   image?: string;
 }
 
+// Firebase update multiple object
+// export type UpdateObject = {[key: string]: Exercise}
+
 // Firebase store data in a object keyed by sting
 export type DatabaseExercises = Record<string, Exercise>;
 
