@@ -44,23 +44,27 @@ const actions: ActionTree<ModuleState, RootState> = {
       });
   },
 
-  checkAuth({ commit }) {
+  async checkAuth({ commit }) {
     // https://firebase.google.com/docs/auth/web/manage-users#get_the_currently_signed-in_user
     commit('layout/SET_LOADING', true, { root: true });
-    onAuthStateChanged(auth, async (user) => {
-      if (!user || !user.displayName) {
-        localStorage.removeItem('gymcronisUserToken');
-        return;
-      }
-      const loggedUser: User = {
-        name: user.displayName,
-        id: user.uid,
-        photoURL: user.photoURL,
-        token: await user.getIdToken(),
-      };
-      commit('SET_USER', loggedUser);
+
+    return new Promise((res, rej) => {
+      onAuthStateChanged(auth, async (user) => {
+        if (!user || !user.displayName) {
+          localStorage.removeItem('gymcronisUserToken');
+          return rej();
+        }
+        const loggedUser: User = {
+          name: user.displayName,
+          id: user.uid,
+          photoURL: user.photoURL,
+          token: await user.getIdToken(),
+        };
+        commit('SET_USER', loggedUser);
+        commit('layout/SET_LOADING', false, { root: true });
+        return res(user);
+      });
     });
-    commit('layout/SET_LOADING', false, { root: true });
   },
 
   async signOut({ commit }) {

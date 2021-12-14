@@ -76,11 +76,6 @@ export default Vue.extend({
       await this.getWorkouts();
     },
 
-    async updatedWorkout() {
-      this.showUpdateDialog = false;
-      await this.getWorkouts();
-    },
-
     async searchWorkout() {
       await this.getWorkouts(this.search);
     },

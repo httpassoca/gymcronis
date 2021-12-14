@@ -1,7 +1,8 @@
 # Database explanation
 
 I used [Firebase](https://firebase.google.com/) to maintain the application data.
-It is kinda hard to understand at first time reading, but I will try to explain in a simple way
+It is kinda hard to understand at first time reading, but I will try to explain in a simple way.
+
 
 ## The rules
 ```json
@@ -12,9 +13,11 @@ It is kinda hard to understand at first time reading, but I will try to explain 
   }
 },
 "workouts": {
-  ".read": "auth != null && data.child('authorId').val() == auth.uid",
-  "$exercise": {
+  ".read": "auth != null",
+  "$user_id": {
+    "$workout": {
       ".write": "auth != null && (!data.exists() || data.child('authorId').val() == auth.uid)",
+    }
   }
 }
 ```

@@ -8,6 +8,7 @@ export type Workout = {
   authorId: string;
   name: string;
   exercises?: WorkoutExercise[];
+  marked: boolean;
 }
 
 // Firebase update multiple object
@@ -18,5 +19,4 @@ export type DatabaseWorkouts = Record<string, Workout>;
 
 export type ModuleState = {
   workouts: Workout[],
-  workout: Workout | null,
 }

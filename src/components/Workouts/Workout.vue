@@ -1,14 +1,18 @@
 <template>
 <Card class="card--workout">
   <div class="label">
-    <Checkbox v-model="marked"/>
+    <Checkbox
+      @change="v => mark(v)"
+      :checked="workoutData.marked"
+      size="medium"
+    />
     <!-- <img :src="workout.image" alt="workout image"> -->
     <div class="title">
-      <h4>{{workout.name}}</h4> - <span>{{ workout.exercises.length }}</span>
+      <h4>{{workoutData.name}}</h4> - <span>{{ workoutData.exercises.length }}</span>
    </div>
   </div>
   <Button
-    @click="$router.replace(`/workout/${workout.id}`)"
+    @click="$router.replace(`/workout/${workoutData.id}`)"
     icon="el-icon-arrow-right"
     class="button"
     type="primary"
@@ -39,15 +43,23 @@ export default Vue.extend({
     },
   },
 
-  computed: {
-    ...mapGetters({ user: 'user/user' }),
-    marked: {
-      get(): boolean { return this.workout.marked; },
-      set(v: boolean) { this.markWorkout(this.workout.id, v); },
-    },
+  data() {
+    return {
+      workoutData: this.workout,
+    };
   },
 
-  methods: mapActions({ markWorkout: 'workouts/mark' }),
+  computed: mapGetters({ user: 'user/user' }),
+
+  methods: {
+    ...mapActions({ updateWorkout: 'workouts/update' }),
+    async mark(value: boolean) {
+      this.workoutData = await this.updateWorkout({
+        ...this.workoutData,
+        marked: value,
+      });
+    },
+  },
 });
 </script>
 

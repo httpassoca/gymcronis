@@ -60,3 +60,12 @@ The usual 👍
 ```
 ## Thanks
 - All exercises are taked from [WGER](https://wger.de/). 
+
+## Things I learned
+
+- Element lib
+- Some Firebase Realtime functions
+  - Update (with 1 or more alterations)
+  - Use promises (realtime is actually with ws, so isn't default to run asynchronous)
+  - Definitely how to make rules
+- Add ts types on Vue Refs
