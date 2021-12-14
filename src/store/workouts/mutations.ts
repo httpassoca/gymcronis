@@ -1,13 +1,13 @@
 import Vue from 'vue';
 import { MutationTree } from 'vuex';
-import { ModuleState, Exercise } from './types';
+import { ModuleState, Workout } from './types';
 
 const mutations: MutationTree<ModuleState> = {
-  SET_EXERCISES(state, payload: Exercise[]) {
-    Vue.set(state, 'exercises', payload);
+  SET_WORKOUTS(state, payload: Workout[]) {
+    Vue.set(state, 'workouts', payload);
   },
-  SET_EXERCISE(state, payload: Exercise) {
-    Vue.set(state, 'exercise', payload);
+  SET_WORKOUT(state, payload: Workout) {
+    Vue.set(state, 'workout', payload);
   },
 };
 
