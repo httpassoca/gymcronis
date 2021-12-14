@@ -38,7 +38,7 @@
   </Form>
   <span slot="footer" class="dialog-footer">
     <Button @click="$emit('canceled')">Cancel</Button>
-    <Button type="primary" @click="submitForm">Confirm</Button>
+    <Button type="primary" @click="submitForm">Edit</Button>
   </span>
 </Dialog>
 </template>
@@ -90,7 +90,7 @@ export default Vue.extend({
       rules: {
         name: [{
           required: true,
-          message: 'Please input Exercise name',
+          message: 'Please input exercise name',
           trigger: 'blur',
         }],
         description: [{

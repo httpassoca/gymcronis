@@ -19,7 +19,7 @@
       Create exercise
     </Button>
   </div>
-  <div v-if="exercises.length" v-loading="loading" class="exercises">
+  <div v-if="exercises.length" class="exercises">
     <Exercise
       v-for="(exercise, i) in exercises"
       :key="i"
@@ -39,12 +39,10 @@
 import Vue from 'vue';
 import { mapGetters, mapActions } from 'vuex';
 import {
-  Button, Input, Form, Loading, Empty,
+  Button, Input, Form, Empty,
 } from 'element-ui';
 import Exercise from '@/components/Exercises/Exercise.vue';
 import ExerciseCreateDialog from '@/components/Exercises/ExerciseCreateDialog.vue';
-
-Vue.use(Loading.directive);
 
 export default Vue.extend({
   name: 'ViewExercises',

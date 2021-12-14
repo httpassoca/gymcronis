@@ -1,13 +1,13 @@
 <template>
 <Dialog
   :visible.sync="value"
-  title="Create an exercise"
+  title="Edit workout"
 >
   <Form
-    :model="form"
-    ref="form"
-    size="small"
     :rules="rules"
+    :model="form"
+    size="small"
+    ref="form"
   >
     <FormItem label="Name" prop="name">
       <Input
@@ -37,8 +37,8 @@
     </FormItem>
   </Form>
   <span slot="footer" class="dialog-footer">
-    <Button @click="cancelForm">Cancel</Button>
-    <Button type="primary" @click="submitForm">Create</Button>
+    <Button @click="$emit('canceled')">Cancel</Button>
+    <Button type="primary" @click="submitForm">Edit</Button>
   </span>
 </Dialog>
 </template>
@@ -59,7 +59,7 @@ import {
 import { formType } from '../types';
 
 export default Vue.extend({
-  name: 'ExerciseCreateDialog',
+  name: 'WorkoutUpdateDialog',
 
   components: {
     Form,
@@ -73,6 +73,10 @@ export default Vue.extend({
 
   props: {
     value: Boolean,
+    workout: {
+      type: Object,
+      required: true,
+    },
   },
 
   data() {
@@ -86,7 +90,7 @@ export default Vue.extend({
       rules: {
         name: [{
           required: true,
-          message: 'Please input Exercise name',
+          message: 'Please input workout name',
           trigger: 'blur',
         }],
         description: [{
@@ -111,28 +115,19 @@ export default Vue.extend({
   },
 
   methods: {
-    ...mapActions({ createExercise: 'exercises/create' }),
-
-    cancelForm() {
-      this.$emit('canceled');
-      this.formRef.resetFields();
-    },
+    ...mapActions({ updateWorkout: 'workouts/update' }),
 
     async submitForm() {
       const valid = await this.formRef.validate();
       if (valid) {
-        this.createExercise(this.form);
-        this.$emit('created');
-        this.formRef.resetFields();
+        this.updateWorkout(this.form);
+        this.$emit('updated');
       }
     },
   },
+
+  mounted() {
+    this.form = { ...this.exercise, id: this.$route.params.id };
+  },
 });
 </script>
-
-<style lang="sass" scoped>
-.flex-col
-  display: flex
-  flex-direction: column
-  align-items: start
-</style>
