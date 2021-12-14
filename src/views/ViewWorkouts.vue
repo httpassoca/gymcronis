@@ -99,14 +99,9 @@ export default Vue.extend({
   grid-gap: 20px 25px
   width: 100%
   margin: 12px 0
-  @media (min-width: 750px)
-    grid-template-columns: repeat(2, 1fr)
-  @media (min-width: 1050px)
-    grid-template-columns: repeat(3, 1fr)
   @media (min-width: 1400px)
-    grid-template-columns: repeat(4, 1fr)
-  @media (min-width: 1700px)
-    grid-template-columns: repeat(5, 1fr)
+    grid-template-columns: repeat(2, 1fr)
+
 .header
   width: 100%
   display: flex
