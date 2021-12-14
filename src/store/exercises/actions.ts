@@ -41,7 +41,7 @@ const actions: ActionTree<ModuleState, RootState> = {
     return firebaseExercise;
   },
 
-  get({ commit }, payload: string) {
+  get({ commit }, payload: string): Promise<Exercise[] | null> {
     // https://firebase.google.com/docs/database/web/read-and-write#read_data
     // https://stackoverflow.com/questions/38618953/how-to-do-a-simple-search-in-string-in-firebase-database
 
@@ -52,22 +52,26 @@ const actions: ActionTree<ModuleState, RootState> = {
       startAt(search),
       endAt(`${payload}\uf8ff`),
     );
-    onValue(exercisesRef, (exercises) => {
-      if (exercises.exists()) {
-        const exercisesInDatabase: DatabaseExercises = exercises.val();
-        const parsedExercises = Object.entries(exercisesInDatabase)
-          .map(([key, exercise]) => ({
-            id: key,
-            authorId: exercise.authorId,
-            name: exercise.name,
-            muscles: exercise.muscles,
-            description: exercise.description,
-          }));
-        commit('SET_EXERCISES', parsedExercises.reverse());
-      } else {
+    return new Promise((res, rej) => {
+      onValue(exercisesRef, (exercises) => {
+        if (exercises.exists()) {
+          const exercisesInDatabase: DatabaseExercises = exercises.val();
+          const parsedExercises = Object.entries(exercisesInDatabase)
+            .map(([key, exercise]) => ({
+              id: key,
+              authorId: exercise.authorId,
+              name: exercise.name,
+              muscles: exercise.muscles,
+              description: exercise.description,
+            }));
+          const exercisesResult = parsedExercises.reverse();
+          commit('SET_EXERCISES', exercisesResult);
+          return res(exercisesResult);
+        }
         commit('SET_EXERCISES', []);
-      }
-    }, { onlyOnce: true });
+        return rej();
+      }, { onlyOnce: true });
+    });
   },
 
   getById({ dispatch, commit }, payload: string) {
