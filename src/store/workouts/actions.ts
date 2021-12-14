@@ -26,7 +26,7 @@ const actions: ActionTree<ModuleState, RootState> = {
       authorId: auth.currentUser.uid,
     };
 
-    const workoutRef = ref(database, 'workouts');
+    const workoutRef = ref(database, `workouts/${auth.currentUser.uid}`);
     await push(workoutRef, firebaseWorkout)
       .then(() => dispatch('layout/createNotification', { text: 'Workout created 😁', type: 'good' }, { root: true }))
       .catch((err) => {
@@ -41,32 +41,44 @@ const actions: ActionTree<ModuleState, RootState> = {
     return firebaseWorkout;
   },
 
-  get({ commit }, payload: string) {
+  get({ commit, dispatch }, payload: string): Promise<Workout[] | null > | null {
     // https://firebase.google.com/docs/database/web/read-and-write#read_data
     // https://stackoverflow.com/questions/38618953/how-to-do-a-simple-search-in-string-in-firebase-database
-
+    if (!auth.currentUser) {
+      dispatch(
+        'layout/createNotification',
+        { text: 'You have no permission to see this workouts 😠', type: 'bad' },
+        { root: true },
+      );
+      return null;
+    }
     const search = payload;
     const workoutRef = query(
-      ref(database, 'workout'),
+      ref(database, `workouts/${auth.currentUser.uid}`),
       orderByChild('name'),
       startAt(search),
-      endAt(`${payload}\uf8ff`),
+      endAt(`${search}\uf8ff`),
     );
-    onValue(workoutRef, (workouts) => {
-      if (workouts.exists()) {
-        const workoutsInDatabase: DatabaseWorkouts = workouts.val();
-        const parsedWorkouts = Object.entries(workoutsInDatabase)
-          .map(([key, workout]) => ({
-            id: key,
-            authorId: workout.authorId,
-            name: workout.name,
-            exercises: workout.exercises,
-          }));
-        commit('SET_WORKOUTS', parsedWorkouts.reverse());
-      } else {
+
+    return new Promise((res, rej) => {
+      onValue(workoutRef, (workouts) => {
+        if (workouts.exists()) {
+          const workoutsInDatabase: DatabaseWorkouts = workouts.val();
+          const parsedWorkouts = Object.entries(workoutsInDatabase)
+            .map(([key, workout]) => ({
+              id: key,
+              authorId: workout.authorId,
+              name: workout.name,
+              exercises: workout.exercises,
+            }));
+          const workoutsResult = parsedWorkouts.reverse();
+          commit('SET_WORKOUTS', workoutsResult);
+          return res(workoutsResult);
+        }
         commit('SET_WORKOUTS', []);
-      }
-    }, { onlyOnce: true });
+        return rej();
+      }, { onlyOnce: true });
+    });
   },
 
   getById({ dispatch, commit }, payload: string) {

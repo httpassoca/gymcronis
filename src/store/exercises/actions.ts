@@ -50,7 +50,7 @@ const actions: ActionTree<ModuleState, RootState> = {
       ref(database, 'exercises'),
       orderByChild('name'),
       startAt(search),
-      endAt(`${payload}\uf8ff`),
+      endAt(`${search}\uf8ff`),
     );
     return new Promise((res, rej) => {
       onValue(exercisesRef, (exercises) => {

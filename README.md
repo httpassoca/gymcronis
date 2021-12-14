@@ -37,13 +37,13 @@ Packages manually instalated:
 - [x] Notifications
 - [x] Loading app style
 - [x] Add exercises module on vuex
-- [ ] Add workouts module on vuex
+- [x] Add workouts module on vuex
 - [x] Config firebase db rules
 - [x] Create firebase db structure
 - [x] Add validation!
-- [ ] Add default exercises
-- [ ] Add exercises CRUD
+- [x] Add exercises CRUD
 - [ ] Add workouts CRUD
+- [ ] Add default exercises
 - [ ] Add workouts integration with exercises
 
 
