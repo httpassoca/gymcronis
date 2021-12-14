@@ -1,6 +1,6 @@
 <template>
 <div id="app" class="customStyle">
-  <Container v-if="user && $route.name !== 'Error'" id="app">
+  <Container v-if="checked && user && $route.name !== 'Error'" id="app">
     <AppMenu
       v-model="collapseMenu"
       @change="collapseMenu = !collapseMenu"
@@ -23,7 +23,7 @@
     </div>
   </Container>
   <transition name="fade" mode="out-in">
-    <router-view v-if="!user || $route.name === 'Error'"/>
+    <router-view v-if="checked && (!user || $route.name === 'Error')"/>
   </transition>
   <AppToastArea/>
   <AppLoading v-if="loading"/>
@@ -61,6 +61,7 @@ export default Vue.extend({
   data() {
     return {
       collapseMenu: false,
+      checked: false,
     };
   },
 
@@ -84,6 +85,7 @@ export default Vue.extend({
 
   async beforeMount() {
     await this.checkAuth();
+    this.checked = true;
   },
 });
 </script>
