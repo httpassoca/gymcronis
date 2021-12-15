@@ -27,11 +27,12 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
+import Vue, { PropType } from 'vue';
 import { mapActions, mapGetters } from 'vuex';
 import {
   Card, Tag, Button, Tooltip,
 } from 'element-ui';
+import { Exercise } from '@/store/exercises/types';
 
 export default Vue.extend({
   name: 'Exercise',
@@ -44,7 +45,7 @@ export default Vue.extend({
 
   props: {
     exercise: {
-      type: Object,
+      type: Object as PropType<Exercise>,
       required: true,
     },
   },

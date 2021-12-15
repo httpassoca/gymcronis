@@ -5,9 +5,9 @@
 >
   <Form
     :model="form"
-    ref="form"
-    size="small"
     :rules="rules"
+    size="small"
+    ref="form"
   >
     <FormItem label="Name" prop="name">
       <Input
@@ -31,14 +31,14 @@
     <FormItem label="Description" prop="description">
       <Input
         v-model="form.description"
-        type="textarea"
         placeholder="Push the ground! Not with your foot, bro, with the hands."
+        type="textarea"
       />
     </FormItem>
   </Form>
   <span slot="footer" class="dialog-footer">
     <Button @click="cancelForm">Cancel</Button>
-    <Button type="primary" @click="submitForm">Create</Button>
+    <Button @click="submitForm" type="primary">Create</Button>
   </span>
 </Dialog>
 </template>
@@ -57,6 +57,7 @@ import {
 } from 'element-ui';
 
 import { formType } from '../types';
+import { DialogDataType } from './types';
 
 export default Vue.extend({
   name: 'ExerciseCreateDialog',
@@ -75,7 +76,7 @@ export default Vue.extend({
     value: Boolean,
   },
 
-  data() {
+  data(): DialogDataType {
     return {
       form: {
         name: '',
@@ -134,5 +135,5 @@ export default Vue.extend({
 .flex-col
   display: flex
   flex-direction: column
-  align-items: start
+  align-items: flex-start
 </style>

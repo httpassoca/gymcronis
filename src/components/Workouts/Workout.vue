@@ -50,13 +50,14 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
+import Vue, { PropType } from 'vue';
 import { mapActions, mapGetters } from 'vuex';
 import {
   Card, Button, Checkbox,
 } from 'element-ui';
 
-import { ListExercise as Exercise } from './WorkoutCreateDialog.vue';
+import { WorkoutData, ListExercise as Exercise } from './types';
+import { Workout } from '@/store/workouts/types';
 
 export default Vue.extend({
   name: 'Workout',
@@ -68,12 +69,12 @@ export default Vue.extend({
 
   props: {
     workout: {
-      type: Object,
+      type: Object as PropType<Workout>,
       required: true,
     },
   },
 
-  data() {
+  data(): WorkoutData {
     return {
       workoutData: this.workout,
       open: false,
@@ -90,9 +91,9 @@ export default Vue.extend({
 
   methods: {
     ...mapActions({
-      removeWorkout: 'workouts/remove',
-      updateWorkout: 'workouts/update',
       updateExercise: 'workouts/updateExercise',
+      updateWorkout: 'workouts/update',
+      removeWorkout: 'workouts/remove',
     }),
 
     async mark(value: boolean) {
@@ -111,7 +112,7 @@ export default Vue.extend({
     },
 
     async remove() {
-      this.removeWorkout(this.workout.id);
+      await this.removeWorkout(this.workout.id);
     },
   },
 });

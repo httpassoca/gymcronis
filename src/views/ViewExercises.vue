@@ -1,7 +1,7 @@
 <template>
 <div class="full-w">
   <div class="header">
-    <Form class="form" @submit.prevent.native="searchExercise">
+    <Form @submit.prevent.native="searchExercise" class="form">
       <Input v-model="search" placeholder="Search for a exercise..."/>
       <Button
         @click="searchExercise"
@@ -11,10 +11,10 @@
       />
     </Form>
     <Button
-      type="primary"
       @click="showCreateDialog = true"
-      icon="el-icon-plus"
       class="button--create"
+      icon="el-icon-plus"
+      type="primary"
     >
       Create exercise
     </Button>
@@ -29,7 +29,7 @@
   <Empty v-else description="0 exercises found" />
   <ExerciseCreateDialog
     v-model="showCreateDialog"
-    @created="createdExercise"
+    @created="showCreateDialog = false"
     @canceled="showCreateDialog = false"
   />
 </div>
@@ -41,6 +41,7 @@ import { mapGetters, mapActions } from 'vuex';
 import {
   Button, Input, Form, Empty,
 } from 'element-ui';
+
 import Exercise from '@/components/Exercises/Exercise.vue';
 import ExerciseCreateDialog from '@/components/Exercises/ExerciseCreateDialog.vue';
 
@@ -48,12 +49,12 @@ export default Vue.extend({
   name: 'ViewExercises',
 
   components: {
-    Button,
-    Exercise,
-    Form,
-    Input,
-    Empty,
     ExerciseCreateDialog,
+    Exercise,
+    Button,
+    Empty,
+    Input,
+    Form,
   },
 
   data() {
@@ -68,16 +69,6 @@ export default Vue.extend({
 
   methods: {
     ...mapActions({ getExercises: 'exercises/get' }),
-
-    async createdExercise() {
-      this.showCreateDialog = false;
-      await this.getExercises();
-    },
-
-    async updatedExercise() {
-      this.showUpdateDialog = false;
-      await this.getExercises();
-    },
 
     async searchExercise() {
       await this.getExercises(this.search);

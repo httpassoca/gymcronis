@@ -44,7 +44,7 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
+import Vue, { PropType } from 'vue';
 import { mapActions } from 'vuex';
 import {
   Button,
@@ -57,6 +57,8 @@ import {
 } from 'element-ui';
 
 import { formType } from '../types';
+import { DialogDataType } from './types';
+import { Exercise } from '@/store/exercises/types';
 
 export default Vue.extend({
   name: 'ExerciseUpdateDialog',
@@ -74,12 +76,12 @@ export default Vue.extend({
   props: {
     value: Boolean,
     exercise: {
-      type: Object,
+      type: Object as PropType<Exercise>,
       required: true,
     },
   },
 
-  data() {
+  data(): DialogDataType {
     return {
       form: {
         name: '',
@@ -127,7 +129,13 @@ export default Vue.extend({
   },
 
   mounted() {
-    this.form = { ...this.exercise, id: this.$route.params.id };
+    this.form = {
+      id: this.$route.params.id,
+      name: this.exercise.name,
+      description: this.exercise.description,
+      image: this.exercise.image || '',
+      muscles: this.exercise.muscles || [],
+    };
   },
 });
 </script>

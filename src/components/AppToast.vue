@@ -7,15 +7,16 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
+import Vue, { PropType } from 'vue';
 import { mapActions } from 'vuex';
+import { Notification } from '@/store/layout/types';
 
 export default Vue.extend({
   name: 'HubToast',
 
   props: {
     notification: {
-      type: Object,
+      type: Object as PropType<Notification>,
       required: true,
     },
   },

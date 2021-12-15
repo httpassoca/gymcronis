@@ -7,11 +7,14 @@
     />
     <div class="flex-column" :style="{width: `calc(100% - ${collapseMenu ? 64 : 250}px)`}">
       <Header class="header">
-        <b>{{ user.name }}</b>
-        <Avatar :src="user.photoURL || './assets/profile_pic.png'"/>
-        <Tooltip effect="dark" content="Logout" placement="bottom-end">
-          <svg @click="logout" stroke="#900000" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
-        </Tooltip>
+        <h2> {{ $route.name }} </h2>
+        <div>
+          <b>{{ user.name }}</b>
+          <Avatar class="avatar" :src="user.photoURL || './assets/profile_pic.png'"/>
+          <Tooltip effect="dark" content="Logout" placement="bottom-end">
+            <svg @click="logout" stroke="#900000" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+          </Tooltip>
+        </div>
       </Header>
       <Main>
         <Container>
@@ -66,16 +69,17 @@ export default Vue.extend({
   },
 
   computed: mapGetters({
-    user: 'user/user',
     loading: 'layout/loading',
+    user: 'user/user',
   }),
 
   methods: {
     ...mapActions({
-      signOut: 'user/signOut',
-      checkAuth: 'user/checkAuth',
       createToast: 'layout/createNotification',
+      checkAuth: 'user/checkAuth',
+      signOut: 'user/signOut',
     }),
+
     async logout() {
       await this.signOut();
       this.createToast({ text: 'Bye! 👋' });
@@ -118,16 +122,20 @@ html
 .header
   background-color: #c1c1c1
   width: 100%
-  color: white
   display: flex
-  justify-content: flex-end
+  justify-content: space-between
   align-items: center
-  b
-    color: black
-    margin-right: 12px
-  svg
-    margin-left: 12px
-    cursor: pointer
+  > div
+    display: flex
+    align-items: center
+    b
+      color: black
+      margin-right: 12px
+    svg
+      margin-left: 12px
+      cursor: pointer
+    .avatar
+      filter: drop-shadow(0px 0px 5px #0007)
 .flex-column
   display: flex
   flex-direction: column

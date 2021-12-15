@@ -43,6 +43,7 @@ export default Vue.extend({
 
   methods: {
     ...mapActions({ signUp: 'user/signUp' }),
+
     async login() {
       this.isLoading = true;
       const user = await this.signUp();

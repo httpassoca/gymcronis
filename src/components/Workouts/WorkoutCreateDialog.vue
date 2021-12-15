@@ -60,11 +60,7 @@ import {
 import { Exercise } from '@/store/exercises/types';
 import { formType } from '../types';
 
-export type ListExercise = {
-  value: string;
-  name: string;
-  marked: boolean;
-}
+import { DialogDataType } from './types';
 
 export default Vue.extend({
   name: 'WorkoutCreateDialog',
@@ -83,7 +79,7 @@ export default Vue.extend({
     value: Boolean,
   },
 
-  data() {
+  data(): DialogDataType {
     return {
       form: {
         name: '',
@@ -96,7 +92,11 @@ export default Vue.extend({
           trigger: 'blur',
         }],
         exercises: [
-          { required: true, message: 'Please select at least one exercise', trigger: 'change' },
+          {
+            required: true,
+            message: 'Please select at least one exercise',
+            trigger: 'change',
+          },
         ],
       },
       options: [],
@@ -121,12 +121,14 @@ export default Vue.extend({
       this.$emit('canceled');
       this.formRef.resetFields();
     },
+
     searchExercise(query: string) {
       if (query !== '') {
         this.loading = true;
         setTimeout(() => {
           this.loading = false;
-          this.options = this.list.filter((item: ListExercise) => item.name.toLowerCase()
+          this.options = this.list.filter((item) => item.name
+            .toLowerCase()
             .indexOf(query.toLowerCase()) > -1);
         }, 200);
       } else {

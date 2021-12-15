@@ -1,6 +1,6 @@
 # gymcronis 💪
 
-An application for workouts to Acronis test. Yes, a bigger 💪 test!
+An application for workouts to Acronis test. Yes, a big 💪 test!
 
 ## Stacks
 The initial setup was made with [Vue CLI](https://cli.vuejs.org/):
@@ -42,9 +42,11 @@ Packages manually instalated:
 - [x] Create firebase db structure
 - [x] Add validation!
 - [x] Add exercises CRUD
-- [ ] Add workouts CRUD
+- [x] Add workouts CRUD
+- [x] Add workouts integration with exercises
+- [ ] Add unit tests
+- [ ] Add snapshot test
 - [ ] Add default exercises
-- [ ] Add workouts integration with exercises
 
 
 ## Features
@@ -58,14 +60,21 @@ The usual 👍
 ```
   yarn && yarn dev
 ```
+
+You can test it too
+```
+  yarn test:unit
+```
+
 ## Thanks
 - All exercises are taked from [WGER](https://wger.de/). 
 
 ## Things I learned
 
 - Element lib
+  - I hadn't seen that element-ui had alerts/notifications before I made my own component 🙃
 - Some Firebase Realtime functions
   - Update (with 1 or more alterations)
-  - Use promises (realtime is actually with ws, so isn't default to run asynchronous)
+  - Use promises (*Realtime* is actually with ws, so isn't default to run asynchronous)
   - Definitely how to make rules
 - Add ts types on Vue Refs

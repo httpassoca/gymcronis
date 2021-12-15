@@ -1,11 +1,11 @@
 <template>
-<div class="full-w" v-if="exercise">
+<div v-if="exercise" class="full-w">
   <div class="header">
     <div>
       <PageHeader
         @back="goBack"
-        title="Back"
         :content="exercise.name"
+        title="Back"
       />
     </div>
     <Button
@@ -29,14 +29,14 @@
     <p>
       {{ exercise.description }}
     </p>
-    <img loading="lazy" :src="exercise.image" alt="exercise image">
+    <img :src="exercise.image" loading="lazy" alt="exercise image">
   </div>
 
   <ExerciseUpdateDialog
     v-model="showUpdateDialog"
-    :exercise="exercise"
-    @updated="updatedExercise"
     @canceled="showUpdateDialog = false"
+    @updated="updatedExercise"
+    :exercise="exercise"
   />
 </div>
 </template>
@@ -49,7 +49,7 @@ import { PageHeader, Button, Tag } from 'element-ui';
 import ExerciseUpdateDialog from '@/components/Exercises/ExerciseUpdateDialog.vue';
 
 export default Vue.extend({
-  name: 'ViewExercises',
+  name: 'ViewExercise',
 
   components: {
     ExerciseUpdateDialog,
@@ -79,8 +79,8 @@ export default Vue.extend({
       this.showUpdateDialog = false;
     },
 
-    goBack() {
-      this.removeExercise();
+    async goBack() {
+      await this.removeExercise();
       this.$router.back();
     },
   },

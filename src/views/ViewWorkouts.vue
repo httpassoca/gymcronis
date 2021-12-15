@@ -60,16 +60,13 @@ export default Vue.extend({
     return {
       search: '',
       showCreateDialog: false,
-      showUpdateDialog: false,
     };
   },
 
   computed: mapGetters({ workouts: 'workouts/workouts' }),
 
   methods: {
-    ...mapActions({
-      getWorkouts: 'workouts/get',
-    }),
+    ...mapActions({ getWorkouts: 'workouts/get' }),
 
     async searchWorkout() {
       await this.getWorkouts(this.search);
