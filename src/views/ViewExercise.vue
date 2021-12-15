@@ -4,8 +4,8 @@
     <div>
       <PageHeader
         @back="goBack"
+        title="Back"
         :content="exercise.name"
-        title="Exercises"
       />
     </div>
     <Button
@@ -81,7 +81,7 @@ export default Vue.extend({
 
     goBack() {
       this.removeExercise();
-      this.$router.replace('/exercises');
+      this.$router.back();
     },
   },
 

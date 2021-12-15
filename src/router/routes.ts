@@ -22,14 +22,6 @@ const routes: Array<AppRoute> = [
     },
   },
   {
-    path: '/workout/:id',
-    name: 'Workout',
-    component: () => import('../views/ViewWorkout.vue'),
-    meta: {
-      requiresAuth: true,
-    },
-  },
-  {
     path: '/exercises',
     name: 'Exercises',
     component: () => import('../views/ViewExercises.vue'),

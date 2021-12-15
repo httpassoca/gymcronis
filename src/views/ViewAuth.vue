@@ -48,7 +48,7 @@ export default Vue.extend({
       const user = await this.signUp();
       this.isLoading = false;
       if (user) {
-        this.$router.replace('/workouts');
+        this.$router.push('/workouts');
       }
     },
   },

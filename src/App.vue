@@ -79,7 +79,7 @@ export default Vue.extend({
     async logout() {
       await this.signOut();
       this.createToast({ text: 'Bye! 👋' });
-      this.$router.replace('/auth');
+      this.$router.push({ name: 'Auth' });
     },
   },
 
@@ -135,7 +135,7 @@ html
 .fade-enter-active, .fade-leave-active
   transition-duration: 0.3s
   transition-property: opacity
-  transition-timing-function: ease
+  transition-timing-function: cubic-bezier(0.215,0.61,0.355,1)
 
 .fade-enter, .fade-leave-active
   opacity: 0

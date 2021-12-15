@@ -29,7 +29,7 @@
   <Empty v-else description="0 workouts found" />
   <WorkoutCreateDialog
     v-model="showCreateDialog"
-    @created="createdWorkout"
+    @created="showCreateDialog = false"
     @canceled="showCreateDialog = false"
   />
 </div>
@@ -70,11 +70,6 @@ export default Vue.extend({
     ...mapActions({
       getWorkouts: 'workouts/get',
     }),
-
-    async createdWorkout() {
-      this.showCreateDialog = false;
-      await this.getWorkouts();
-    },
 
     async searchWorkout() {
       await this.getWorkouts(this.search);

@@ -22,7 +22,7 @@
       {{ exercise.description }}
     </p>
   </div>
-  <Button class="button" @click="$router.replace(`/exercise/${exercise.id}`)"> See more </Button>
+  <Button class="button" @click="$router.push(`/exercise/${exercise.id}`)"> See more </Button>
 </Card>
 </template>
 
