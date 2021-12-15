@@ -1,6 +1,6 @@
-# gymcronis 💪
+# Gymcronis 💪
 
-An application for workouts to Acronis test. Yes, a big 💪 test!
+An application for workouts to [Acronis](https://www.acronis.com/) test. Yes, a big 💪 test!
 
 ## Stacks
 The initial setup was made with [Vue CLI](https://cli.vuejs.org/):
@@ -19,11 +19,13 @@ Packages manually instalated:
 
 ## Application Rules
 - CRUD Exercises
-  - 36 default exercises
+  - * 18 default exercises
 - CRUD Workout
-  - 3 default workouts
 - Mark exercises as complete in workout
 - Mark workout as complete if all exercises are completed
+- * You just can CRUD workouts that you created
+- * You can see all exercises, but just can alter if it are yours
+
 ## Roadmap
 
 - [x] Add dependecies
@@ -68,6 +70,7 @@ You can test it too
 
 ## Thanks
 - All exercises are taked from [WGER](https://wger.de/). 
+- All default exercises images are from Google. 
 
 ## Things I learned
 
@@ -78,3 +81,4 @@ You can test it too
   - Use promises (*Realtime* is actually with ws, so isn't default to run asynchronous)
   - Definitely how to make rules
 - Add ts types on Vue Refs
+- 100% Flux architecture
