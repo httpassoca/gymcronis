@@ -47,7 +47,7 @@ import Vue from 'vue';
 import { mapActions, mapGetters } from 'vuex';
 import { PageHeader, Button, Tag } from 'element-ui';
 
-import ExerciseUpdateDialog from '@/components/Exercises/ExerciseUpdateDialog.vue';
+import ExerciseUpdateDialog from '../components/Exercises/ExerciseUpdateDialog.vue';
 
 export default Vue.extend({
   name: 'ViewExercise',

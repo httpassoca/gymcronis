@@ -2,7 +2,7 @@ import {
   onValue, orderByChild, push, ref, query, startAt, endAt, set, remove,
 } from 'firebase/database';
 import { ActionTree } from 'vuex';
-import { database, auth } from '@/services/firebase';
+import { database, auth } from '../../services/firebase';
 import { RootState } from '../types';
 import {
   ModuleState, Workout, DatabaseWorkouts, UpdateExercisePayload, UpdatePayload,

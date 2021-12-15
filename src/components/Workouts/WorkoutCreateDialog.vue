@@ -58,7 +58,7 @@ import {
   Option,
 } from 'element-ui';
 
-import { Exercise } from '@/store/exercises/types';
+import { Exercise } from '../../store/exercises/types';
 import { formType } from '../types';
 
 import { DialogDataType } from './types';

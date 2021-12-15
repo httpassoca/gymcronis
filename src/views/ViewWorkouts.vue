@@ -42,8 +42,8 @@ import { mapGetters, mapActions } from 'vuex';
 import {
   Button, Input, Form, Empty,
 } from 'element-ui';
-import Workout from '@/components/Workouts/Workout.vue';
-import WorkoutCreateDialog from '@/components/Workouts/WorkoutCreateDialog.vue';
+import Workout from '../components/Workouts/Workout.vue';
+import WorkoutCreateDialog from '../components/Workouts/WorkoutCreateDialog.vue';
 
 export default Vue.extend({
   name: 'ViewWorkouts',

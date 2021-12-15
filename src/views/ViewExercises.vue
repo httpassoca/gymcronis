@@ -43,8 +43,8 @@ import {
   Button, Input, Form, Empty,
 } from 'element-ui';
 
-import Exercise from '@/components/Exercises/Exercise.vue';
-import ExerciseCreateDialog from '@/components/Exercises/ExerciseCreateDialog.vue';
+import Exercise from '../components/Exercises/Exercise.vue';
+import ExerciseCreateDialog from '../components/Exercises/ExerciseCreateDialog.vue';
 
 export default Vue.extend({
   name: 'ViewExercises',

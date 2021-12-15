@@ -57,7 +57,7 @@ import {
 } from 'element-ui';
 
 import { WorkoutData, ListExercise as Exercise } from './types';
-import { Workout } from '@/store/workouts/types';
+import { Workout } from '../../store/workouts/types';
 
 export default Vue.extend({
   name: 'Workout',

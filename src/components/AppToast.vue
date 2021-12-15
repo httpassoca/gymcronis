@@ -9,7 +9,7 @@
 <script lang="ts">
 import Vue, { PropType } from 'vue';
 import { mapActions } from 'vuex';
-import { Notification } from '@/store/layout/types';
+import { Notification } from '../store/layout/types';
 
 export default Vue.extend({
   name: 'HubToast',

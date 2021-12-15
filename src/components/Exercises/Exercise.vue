@@ -32,7 +32,7 @@ import { mapActions, mapGetters } from 'vuex';
 import {
   Card, Tag, Button, Tooltip,
 } from 'element-ui';
-import { Exercise } from '@/store/exercises/types';
+import { Exercise } from '../../store/exercises/types';
 
 export default Vue.extend({
   name: 'Exercise',

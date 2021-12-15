@@ -5,7 +5,7 @@ import {
   signInWithPopup,
   signOut,
 } from 'firebase/auth';
-import { auth } from '@/services/firebase';
+import { auth } from '../../services/firebase';
 
 import { User, ModuleState } from './types';
 import { RootState } from '../types';

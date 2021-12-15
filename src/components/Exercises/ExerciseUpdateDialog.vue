@@ -59,7 +59,7 @@ import {
 
 import { formType } from '../types';
 import { DialogDataType } from './types';
-import { Exercise } from '@/store/exercises/types';
+import { Exercise } from '../../store/exercises/types';
 
 export default Vue.extend({
   name: 'ExerciseUpdateDialog',

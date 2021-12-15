@@ -18,7 +18,7 @@
 <script lang="ts">
 import Vue from 'vue';
 import { mapGetters } from 'vuex';
-import AppToast from '@/components/AppToast.vue';
+import AppToast from './AppToast.vue';
 
 export default Vue.extend({
   name: 'AppToastArea',
