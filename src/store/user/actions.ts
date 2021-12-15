@@ -64,6 +64,7 @@ const actions: ActionTree<ModuleState, RootState> = {
         commit('layout/SET_LOADING', false, { root: true });
         return res(user);
       });
+      commit('layout/SET_LOADING', false, { root: true });
     });
   },
 
