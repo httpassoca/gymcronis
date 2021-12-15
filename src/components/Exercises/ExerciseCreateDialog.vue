@@ -25,7 +25,7 @@
         <Checkbox label="Legs" name="muscle"/>
       </CheckboxGroup>
     </FormItem>
-    <FormItem label="Image url">
+    <FormItem label="Image url" prop="image">
       <Input v-model="form.image"/>
     </FormItem>
     <FormItem label="Description" prop="description">
