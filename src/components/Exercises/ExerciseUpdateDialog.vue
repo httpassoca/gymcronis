@@ -1,5 +1,6 @@
 <template>
 <Dialog
+  @close="e => $emit('change', false)"
   :visible.sync="value"
   title="Edit exercise"
 >

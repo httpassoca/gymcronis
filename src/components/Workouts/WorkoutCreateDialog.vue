@@ -1,6 +1,7 @@
 <template>
 <Dialog
-  :visible.sync="value"
+  @close="e => $emit('change', false)"
+  :visible="value"
   title="Create a workout"
 >
   <Form

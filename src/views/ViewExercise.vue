@@ -34,6 +34,7 @@
 
   <ExerciseUpdateDialog
     v-model="showUpdateDialog"
+    @change="e => showCreateDialog = e"
     @canceled="showUpdateDialog = false"
     @updated="updatedExercise"
     :exercise="exercise"

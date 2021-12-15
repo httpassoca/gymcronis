@@ -29,6 +29,7 @@
   <Empty v-else description="0 workouts found" />
   <WorkoutCreateDialog
     v-model="showCreateDialog"
+    @change="e => showCreateDialog = e"
     @created="showCreateDialog = false"
     @canceled="showCreateDialog = false"
   />
