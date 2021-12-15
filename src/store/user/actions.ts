@@ -62,7 +62,7 @@ const actions: ActionTree<ModuleState, RootState> = {
         };
         commit('SET_USER', loggedUser);
         commit('layout/SET_LOADING', false, { root: true });
-        return res(user);
+        return res(null);
       });
       commit('layout/SET_LOADING', false, { root: true });
     });
