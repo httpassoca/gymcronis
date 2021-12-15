@@ -127,7 +127,7 @@ export default Vue.extend({
   },
 
   mounted() {
-    this.form = { ...this.exercise, id: this.$route.params.id };
+    this.form = { ...this.workout, id: this.$route.params.id };
   },
 });
 </script>

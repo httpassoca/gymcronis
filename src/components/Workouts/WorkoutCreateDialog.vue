@@ -60,9 +60,10 @@ import {
 import { Exercise } from '@/store/exercises/types';
 import { formType } from '../types';
 
-type ListExercise = {
+export type ListExercise = {
   value: string;
   name: string;
+  marked: boolean;
 }
 
 export default Vue.extend({
@@ -148,6 +149,7 @@ export default Vue.extend({
     this.list = exercises.map((exercise: Exercise) => ({
       value: exercise.id,
       name: exercise.name,
+      marked: false,
     }));
   },
 });
@@ -157,11 +159,16 @@ export default Vue.extend({
 .flex-col
   display: flex
   flex-direction: column
-  align-items: start
+  align-items: flex-start
 </style>
 
 <style lang="sass">
 .el-select-dropdown.is-multiple
   .el-select-dropdown__item.selected
     color: #900000 !important
+.flex-col
+  .el-form-item__content
+    width: 100%
+  .el-select__tags
+    max-width: unset
 </style>
