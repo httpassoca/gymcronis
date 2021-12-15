@@ -19,12 +19,12 @@ Packages manually instalated:
 
 ## Application Rules
 - CRUD Exercises
-  - * 18 default exercises
+  - 18 default exercises *
 - CRUD Workout
 - Mark exercises as complete in workout
 - Mark workout as complete if all exercises are completed
-- * You just can CRUD workouts that you created
-- * You can see all exercises, but just can alter if it are yours
+- You just can CRUD workouts that you created *
+- You can see all exercises, but just can alter if it are yours *
 
 ## Roadmap
 
@@ -46,9 +46,9 @@ Packages manually instalated:
 - [x] Add exercises CRUD
 - [x] Add workouts CRUD
 - [x] Add workouts integration with exercises
-- [ ] Add unit tests
-- [ ] Add snapshot test
-- [ ] Add default exercises
+- [x] Add unit tests
+- [x] Add snapshot test
+- [x] Add default exercises
 
 
 ## Features
@@ -65,7 +65,7 @@ The usual 👍
 
 You can test it too
 ```
-  yarn test:unit
+  yarn test
 ```
 
 ## Thanks
@@ -81,4 +81,5 @@ You can test it too
   - Use promises (*Realtime* is actually with ws, so isn't default to run asynchronous)
   - Definitely how to make rules
 - Add ts types on Vue Refs
+- Tests with snapshots
 - 100% Flux architecture
