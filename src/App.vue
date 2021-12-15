@@ -44,9 +44,9 @@ import {
   Tooltip,
   Avatar,
 } from 'element-ui';
-import AppMenu from '@/components/AppMenu.vue';
-import AppToastArea from '@/components/AppToastArea.vue';
-import AppLoading from '@/components/AppLoading.vue';
+import AppMenu from './components/AppMenu.vue';
+import AppToastArea from './components/AppToastArea.vue';
+import AppLoading from './components/AppLoading.vue';
 
 export default Vue.extend({
   name: 'App',

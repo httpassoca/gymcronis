@@ -56,17 +56,20 @@ const actions: ActionTree<ModuleState, RootState> = {
           photoURL: user.photoURL,
           token: await user.getIdToken(),
         };
+        localStorage.setItem('gymcronisUserToken', loggedUser.token);
         commit('SET_USER', loggedUser);
         commit('layout/SET_CHECKED', true, { root: true });
         commit('layout/SET_LOADING', false, { root: true });
+      } else {
+        localStorage.removeItem('gymcronisUserToken');
+        commit('layout/SET_LOADING', false, { root: true });
+        commit('layout/SET_CHECKED', true, { root: true });
       }
-      localStorage.removeItem('gymcronisUserToken');
-      commit('layout/SET_LOADING', false, { root: true });
-      commit('layout/SET_CHECKED', true, { root: true });
     });
   },
 
   async signOut({ commit }) {
+    localStorage.removeItem('gymcronisUserToken');
     commit('SET_USER', null);
     return signOut(auth);
   },
