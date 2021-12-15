@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ViewError.vue should render component 1`] = `
+<div class="error">
+  <div class="el-card is-always-shadow">
+    <!---->
+    <div class="el-card__body">
+      <div>
+        <h2>Page "wrongPage" does not exist</h2>
+        <p>Bro, here is lonely and empty. Go to a better place 🤜</p>
+        <router-link-stub to="[object Object]"><button type="button" class="el-button el-button--primary">
+            <!---->
+            <!----><span> Go to workouts page </span>
+          </button></router-link-stub>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`ViewError.vue should show "Unauthorized" when 401 error 1`] = `"received is not a function"`;

@@ -21,6 +21,7 @@ describe('ViewError.vue', () => {
 
   test('should render component', () => {
     expect(!!factory().html()).toBe(true);
+    expect(factory()).toMatchSnapshot();
   });
 
   test('should show the wrong page when 404 error', () => {
@@ -31,5 +32,6 @@ describe('ViewError.vue', () => {
   test('should show "Unauthorized" when 401 error', () => {
     const wrapper = factory({ propsData: { error: '401' } });
     expect(wrapper.get('h2').text()).toContain('Unauthorized');
+    expect(wrapper).toThrowErrorMatchingSnapshot();
   });
 });
