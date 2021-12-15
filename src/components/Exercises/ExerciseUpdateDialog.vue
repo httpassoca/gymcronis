@@ -132,6 +132,7 @@ export default Vue.extend({
     this.form = {
       id: this.$route.params.id,
       name: this.exercise.name,
+      authorId: this.exercise.authorId,
       description: this.exercise.description,
       image: this.exercise.image || '',
       muscles: this.exercise.muscles || [],

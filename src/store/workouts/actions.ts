@@ -19,7 +19,7 @@ const actions: ActionTree<ModuleState, RootState> = {
           { text: 'You have no permission to create a workout 😠', type: 'bad' },
           { root: true },
         );
-        return rej(new Error('401'));
+        return rej(new Error('No authorization.'));
       }
 
       const { uid } = auth.currentUser;
@@ -58,7 +58,7 @@ const actions: ActionTree<ModuleState, RootState> = {
           { text: 'You have no permission to get those workouts 😠', type: 'bad' },
           { root: true },
         );
-        return rej(new Error('401'));
+        return rej(new Error('No authorization.'));
       }
 
       const { uid } = auth.currentUser;
@@ -123,7 +123,7 @@ const actions: ActionTree<ModuleState, RootState> = {
           { text: 'You have no permission to update a workout 😠', type: 'bad' },
           { root: true },
         );
-        return rej(new Error('401'));
+        return rej(new Error('No authorization.'));
       }
 
       const { uid } = auth.currentUser;

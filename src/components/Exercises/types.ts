@@ -6,6 +6,7 @@ type Rule = {
 }
 
 type Form = {
+  authorId?: string;
   id?: string;
   name: string;
   description: string;
