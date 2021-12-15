@@ -1,75 +1,76 @@
 import {
-  onValue, orderByChild, push, ref, remove, query, startAt, endAt, set,
+  onValue, orderByChild, push, ref, query, startAt, endAt, set, remove,
 } from 'firebase/database';
 import { ActionTree } from 'vuex';
 import { database, auth } from '@/services/firebase';
 import { RootState } from '../types';
 import {
-  ModuleState, Workout, DatabaseWorkouts,
+  ModuleState, Workout, DatabaseWorkouts, UpdateExercise,
 } from './types';
 
 const actions: ActionTree<ModuleState, RootState> = {
-  async create({ dispatch }, payload: Workout): Promise<Workout | null> {
+  async create({ dispatch }, payload: Workout): Promise<null> {
     // https://firebase.google.com/docs/database/web/read-and-write#updating_or_deleting_data
 
-    if (!auth.currentUser) {
+    return new Promise((res, rej) => {
+      if (!auth.currentUser) {
+        dispatch(
+          'layout/createNotification',
+          { text: 'You have no permission to create a workout 😠', type: 'bad' },
+          { root: true },
+        );
+        return rej(new Error('401'));
+      }
+
+      const { uid } = auth.currentUser;
+      const workout = {
+        name: payload.name,
+        authorId: uid,
+        marked: false,
+      };
+
+      const workoutRef = ref(database, `workouts/${uid}`);
+      const { key } = push(workoutRef, workout);
+
+      for (let i = 0; i < payload.exercises.length; i += 1) {
+        const exercise = payload.exercises[i];
+        const exerciseRef = ref(database, `workouts/${uid}/${key}/exercises/${exercise.value}`);
+        set(exerciseRef, { marked: false, name: exercise.name });
+      }
+      dispatch('get');
       dispatch(
-        'layout/createNotification',
-        { text: 'You have no permission to create a workout 😠', type: 'bad' },
-        { root: true },
-      );
-      return null;
-    }
-
-    const { uid } = auth.currentUser;
-    const workout: Workout = {
-      ...payload,
-      authorId: uid,
-      marked: false,
-    };
-
-    const workoutRef = ref(database, `workouts/${uid}`);
-    await push(workoutRef, workout)
-      .then(() => dispatch(
         'layout/createNotification',
         { text: 'Workout created 😁', type: 'good' },
         { root: true },
-      ))
-      .catch((err) => {
-        console.log(err.code);
-        dispatch(
-          'layout/createNotification',
-          { text: 'Failed to create workout 😞 ', type: 'bad' },
-          { root: true },
-        );
-      });
-    return workout;
+      );
+      return res(null);
+    });
   },
 
   get({ commit, dispatch }, payload: string): Promise<Workout[] | null > | null {
     // https://firebase.google.com/docs/database/web/read-and-write#read_data
     // https://stackoverflow.com/questions/38618953/how-to-do-a-simple-search-in-string-in-firebase-database
 
-    if (!auth.currentUser) {
-      dispatch(
-        'layout/createNotification',
-        { text: 'You have no permission to get those workouts 😠', type: 'bad' },
-        { root: true },
-      );
-      return null;
-    }
-    const { uid } = auth.currentUser;
-    console.log(uid);
-    const search = payload;
-
-    const workoutRef = query(
-      ref(database, `workouts/${uid}`),
-      orderByChild('name'),
-      startAt(search),
-      endAt(`${search}\uf8ff`),
-    );
-
     return new Promise((res, rej) => {
+      if (!auth.currentUser) {
+        dispatch(
+          'layout/createNotification',
+          { text: 'You have no permission to get those workouts 😠', type: 'bad' },
+          { root: true },
+        );
+        return rej(new Error('401'));
+      }
+
+      const { uid } = auth.currentUser;
+      const search = payload;
+
+      const workoutRef = query(
+        ref(database, `workouts/${uid}`),
+        orderByChild('name'),
+        startAt(search),
+        endAt(`${search}\uf8ff`),
+      );
+
       onValue(workoutRef, (workouts) => {
         if (workouts.exists()) {
           const workoutsInDatabase: DatabaseWorkouts = workouts.val();
@@ -78,95 +79,69 @@ const actions: ActionTree<ModuleState, RootState> = {
               id: key,
               authorId: workout.authorId,
               name: workout.name,
-              exercises: workout.exercises,
+              exercises: Object.entries(workout.exercises).map(([k, v]) => ({ ...v, value: k })),
               marked: workout.marked,
             }));
           const workoutsResult = parsedWorkouts.reverse();
           commit('SET_WORKOUTS', workoutsResult);
-          return res(workoutsResult);
+          return res(null);
         }
         commit('SET_WORKOUTS', []);
         return rej();
       }, { onlyOnce: true });
+      return res(null);
     });
   },
 
-  getById({ dispatch }, payload: string): Promise<Workout | null > | null {
-    if (!auth.currentUser) {
-      dispatch(
-        'layout/createNotification',
-        { text: 'You have no permission to get this workout 😠', type: 'bad' },
-        { root: true },
-      );
-      return null;
-    }
-    const { uid } = auth.currentUser;
-    const id = payload;
-
-    const workoutRef = ref(database, `workouts/${uid}/${id}`);
+  async updateExercise({ dispatch }, payload: UpdateExercise) {
     return new Promise((res, rej) => {
-      onValue(workoutRef, (workout) => {
-        if (workout.exists()) {
-          return res(workout.val());
-        }
-
+      if (!auth.currentUser) {
         dispatch(
           'layout/createNotification',
-          { text: 'Workout not found ', type: 'bad' },
+          { text: 'You have no permission to update a workout 😠', type: 'bad' },
           { root: true },
         );
-        return rej();
-      }, { onlyOnce: true });
-    });
-  },
+        return rej(new Error('401'));
+      }
 
-  async update({ dispatch }, payload: Workout): Promise<Workout | null> {
-    if (!auth.currentUser) {
-      dispatch(
-        'layout/createNotification',
-        { text: 'You have no permission to update a workout 😠', type: 'bad' },
-        { root: true },
-      );
-      return null;
-    }
+      const { uid } = auth.currentUser;
+      const { workoutId, id, value } = payload;
 
-    const { uid } = auth.currentUser;
-    const workout = payload;
-
-    const workoutRef = ref(database, `workouts/${uid}/${workout.id}`);
-    return new Promise((res, rej) => {
-      set(workoutRef, workout)
-        .catch((err) => {
-          console.log(err.code);
-          return rej();
-        });
-      return res(workout);
+      const exerciseRef = ref(database, `workouts/${uid}/${workoutId}/exercises/${id}/marked`);
+      set(exerciseRef, value)
+        .then(() => dispatch('get'))
+        .catch((err) => rej(new Error(err.code)));
+      return res(null);
     });
   },
 
   async remove({ dispatch }, payload: string): Promise<null> {
-    if (!auth.currentUser) {
-      dispatch(
-        'layout/createNotification',
-        { text: 'You have no permission to remove a workout 😠', type: 'bad' },
-        { root: true },
-      );
-      return null;
-    }
-    const { uid } = auth.currentUser;
-    const id = payload;
-    const workoutRef = ref(database, `workouts/${uid}/${id}`);
-
-    await remove(workoutRef)
-      .then(() => {
+    return new Promise((res, rej) => {
+      if (!auth.currentUser) {
         dispatch(
           'layout/createNotification',
-          { text: 'Workout removed! ', type: 'good' },
+          { text: 'You have no permission to remove a workout 😠', type: 'bad' },
           { root: true },
         );
-      })
-      .catch((err) => console.log(err));
-    return null;
+        return null;
+      }
+      const { uid } = auth.currentUser;
+      const id = payload;
+      const workoutRef = ref(database, `workouts/${uid}/${id}`);
+
+      remove(workoutRef)
+        .then(() => {
+          dispatch(
+            'layout/createNotification',
+            { text: 'Workout removed! ', type: 'good' },
+            { root: true },
+          );
+          dispatch('get');
+          res(null);
+        })
+        .catch((err) => rej(new Error(err.code)));
+      return res(null);
+    });
   },
 };
 

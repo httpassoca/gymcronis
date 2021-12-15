@@ -1,5 +1,6 @@
 export type WorkoutExercise = {
-  id: string
+  value: string
+  name: string
   marked: boolean
 }
 
@@ -7,8 +8,14 @@ export type Workout = {
   id: string;
   authorId: string;
   name: string;
-  exercises?: WorkoutExercise[];
+  exercises: WorkoutExercise[]
   marked: boolean;
+}
+
+export type UpdateExercise = {
+  id: string;
+  workoutId: string;
+  value: boolean;
 }
 
 // Firebase update multiple object
