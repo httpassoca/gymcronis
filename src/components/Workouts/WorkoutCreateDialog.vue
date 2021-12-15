@@ -5,9 +5,9 @@
 >
   <Form
     :model="form"
-    ref="form"
-    size="small"
     :rules="rules"
+    size="small"
+    ref="form"
   >
     <FormItem label="Name" prop="name">
       <Input
@@ -60,7 +60,7 @@ import {
 import { Exercise } from '@/store/exercises/types';
 import { formType } from '../types';
 
-import { DialogDataType, ListExercise } from './types';
+import { DialogDataType } from './types';
 
 export default Vue.extend({
   name: 'WorkoutCreateDialog',
