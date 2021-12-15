@@ -46,7 +46,7 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import { mapActions } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
 import {
   Button,
   Form,
@@ -60,7 +60,7 @@ import {
 import { Exercise } from '@/store/exercises/types';
 import { formType } from '../types';
 
-import { DialogDataType } from './types';
+import { DialogDataType, ListExercise } from './types';
 
 export default Vue.extend({
   name: 'WorkoutCreateDialog',
@@ -99,13 +99,15 @@ export default Vue.extend({
           },
         ],
       },
-      options: [],
       list: [],
+      options: [],
       loading: false,
     };
   },
 
   computed: {
+    ...mapGetters({ exercises: 'exercises/exercises' }),
+
     formRef(): formType {
       return this.$refs.form as formType;
     },
@@ -123,6 +125,14 @@ export default Vue.extend({
     },
 
     searchExercise(query: string) {
+      if (!this.list.length) {
+        this.list = this.exercises.map((exercise: Exercise) => ({
+          value: exercise.id,
+          name: exercise.name,
+          marked: false,
+        }));
+      }
+
       if (query !== '') {
         this.loading = true;
         setTimeout(() => {
@@ -147,12 +157,7 @@ export default Vue.extend({
   },
 
   async mounted() {
-    const exercises = await this.getExercises() || [];
-    this.list = exercises.map((exercise: Exercise) => ({
-      value: exercise.id,
-      name: exercise.name,
-      marked: false,
-    }));
+    await this.getExercises();
   },
 });
 </script>
