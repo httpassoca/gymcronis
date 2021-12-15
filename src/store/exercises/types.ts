@@ -2,7 +2,6 @@ export type Exercise = {
   id: string;
   authorId: string;
   name: string;
-  custom?: boolean;
   muscles?: string[];
   description: string;
   image?: string;

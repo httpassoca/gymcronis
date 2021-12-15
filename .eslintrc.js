@@ -32,4 +32,12 @@ module.exports = {
       },
     },
   ],
+  settings: {
+    'import/resolver': {
+      'node': {
+        'extensions': ['.js', '.ts', '.d.ts', '.vue'],
+        'moduleDirectory': ['node_modules', 'src/']
+      },
+    },
+  }
 };
