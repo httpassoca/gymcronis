@@ -5,7 +5,7 @@ import { ActionTree } from 'vuex';
 import { database, auth } from '@/services/firebase';
 import { RootState } from '../types';
 import {
-  ModuleState, Workout, DatabaseWorkouts, UpdateExercise,
+  ModuleState, Workout, DatabaseWorkouts, UpdateExercisePayload, UpdatePayload,
 } from './types';
 
 const actions: ActionTree<ModuleState, RootState> = {
@@ -93,7 +93,29 @@ const actions: ActionTree<ModuleState, RootState> = {
     });
   },
 
-  async updateExercise({ dispatch }, payload: UpdateExercise) {
+  async update({ dispatch }, payload: UpdatePayload): Promise<Workout | null> {
+    if (!auth.currentUser) {
+      dispatch(
+        'layout/createNotification',
+        { text: 'You have no permission to update a workout 😠', type: 'bad' },
+        { root: true },
+      );
+      return null;
+    }
+
+    const { uid } = auth.currentUser;
+    const { value, id } = payload;
+
+    const workoutRef = ref(database, `workouts/${uid}/${id}/marked`);
+    return new Promise((res, rej) => {
+      set(workoutRef, value)
+        .then(() => dispatch('get'))
+        .catch((err) => rej(new Error(err.code)));
+      return res(null);
+    });
+  },
+
+  async updateExercise({ dispatch }, payload: UpdateExercisePayload) {
     return new Promise((res, rej) => {
       if (!auth.currentUser) {
         dispatch(

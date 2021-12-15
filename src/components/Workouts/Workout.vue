@@ -5,7 +5,7 @@
       <Checkbox
         @change="v => mark(v)"
         :checked="workoutData.marked"
-        :disabled="true"
+        :disabled="!isWorkoutCheckable"
         size="medium"
       />
       <div class="title">
@@ -33,6 +33,7 @@
           <Checkbox
             @change="v => markExercise(exercise.value, v)"
             :checked="exercise.marked"
+            :disabled="workout.marked"
             size="small"
           />
           <router-link
@@ -81,6 +82,10 @@ export default Vue.extend({
 
   computed: {
     ...mapGetters({ user: 'user/user' }),
+
+    isWorkoutCheckable(): boolean {
+      return this.workout.exercises.every((exercise: Exercise) => exercise.marked);
+    },
   },
 
   methods: {
@@ -91,14 +96,14 @@ export default Vue.extend({
     }),
 
     async mark(value: boolean) {
-      this.workoutData = await this.updateWorkout({
-        ...this.workoutData,
-        marked: value,
+      await this.updateWorkout({
+        id: this.workoutData.id,
+        value,
       });
     },
 
     async markExercise(id: string, value: boolean) {
-      this.workoutData = await this.updateExercise({
+      await this.updateExercise({
         workoutId: this.workoutData.id,
         value,
         id,

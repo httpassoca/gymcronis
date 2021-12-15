@@ -12,9 +12,13 @@ export type Workout = {
   marked: boolean;
 }
 
-export type UpdateExercise = {
+export type UpdateExercisePayload = {
   id: string;
   workoutId: string;
+  value: boolean;
+}
+export type UpdatePayload = {
+  id: string;
   value: boolean;
 }
 
