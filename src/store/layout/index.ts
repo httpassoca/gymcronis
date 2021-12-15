@@ -9,6 +9,7 @@ import { ModuleState } from './types';
 export const state: ModuleState = {
   notifications: [],
   loading: false,
+  checkedUser: false,
 };
 
 const namespaced = true;

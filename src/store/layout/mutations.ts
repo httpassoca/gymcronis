@@ -24,6 +24,9 @@ const mutations: MutationTree<ModuleState> = {
   SET_LOADING(state, status: boolean) {
     Vue.set(state, 'loading', status);
   },
+  SET_CHECKED(state, status: boolean) {
+    Vue.set(state, 'checkedUser', status);
+  },
 };
 
 export default mutations;

@@ -6,4 +6,5 @@ export type Notification = {
 export type ModuleState = {
   notifications: Array<Notification>;
   loading: boolean;
+  checkedUser: boolean;
 }
