@@ -9,7 +9,7 @@ import {
 } from './types';
 
 const actions: ActionTree<ModuleState, RootState> = {
-  async create({ dispatch }, payload: Exercise): Promise<null> {
+  async create({ dispatch }, payload: Exercise): Promise<void> {
     // https://firebase.google.com/docs/database/web/read-and-write#updating_or_deleting_data
 
     return new Promise((res, rej) => {
@@ -36,7 +36,7 @@ const actions: ActionTree<ModuleState, RootState> = {
             { root: true },
           );
           dispatch('get');
-          res(null);
+          res();
         })
         .catch((err) => {
           dispatch(
@@ -47,11 +47,11 @@ const actions: ActionTree<ModuleState, RootState> = {
           rej(new Error(err.code));
         });
 
-      return res(null);
+      return res();
     });
   },
 
-  get({ commit }, payload: string): Promise<null> {
+  get({ commit }, payload: string): Promise<void> {
     // https://firebase.google.com/docs/database/web/read-and-write#read_data
     // https://stackoverflow.com/questions/38618953/how-to-do-a-simple-search-in-string-in-firebase-database
 
@@ -77,7 +77,7 @@ const actions: ActionTree<ModuleState, RootState> = {
             }));
           const exercisesResult = parsedExercises.reverse();
           commit('SET_EXERCISES', exercisesResult);
-          return res(null);
+          return res();
         }
         commit('SET_EXERCISES', []);
         return rej();
@@ -85,7 +85,7 @@ const actions: ActionTree<ModuleState, RootState> = {
     });
   },
 
-  getById({ dispatch, commit }, payload: string): Promise<null> {
+  getById({ dispatch, commit }, payload: string): Promise<void> {
     const id = payload;
     const exerciseRef = ref(database, `exercises/${id}`);
 
@@ -93,7 +93,7 @@ const actions: ActionTree<ModuleState, RootState> = {
       onValue(exerciseRef, (exercise) => {
         if (exercise.exists()) {
           commit('SET_EXERCISE', exercise.val());
-          res(null);
+          res();
         } else {
           dispatch(
             'layout/createNotification',
@@ -107,7 +107,7 @@ const actions: ActionTree<ModuleState, RootState> = {
     });
   },
 
-  async update({ dispatch }, payload: Exercise): Promise<null> {
+  async update({ dispatch }, payload: Exercise): Promise<void> {
     const exerciseRef = ref(database, `exercises/${payload.id}`);
 
     return new Promise((res, rej) => {
@@ -115,13 +115,13 @@ const actions: ActionTree<ModuleState, RootState> = {
         .then(() => {
           dispatch('getById', payload.id);
           dispatch('get');
-          res(null);
+          res();
         })
         .catch((err) => rej(new Error(err.code)));
     });
   },
 
-  async remove({ dispatch }, payload: string): Promise<null> {
+  async remove({ dispatch }, payload: string): Promise<void> {
     // https://firebase.google.com/docs/database/web/read-and-write#updating_or_deleting_data
 
     const exerciseId = payload;
@@ -136,7 +136,7 @@ const actions: ActionTree<ModuleState, RootState> = {
             { root: true },
           );
           dispatch('get');
-          res(null);
+          res();
         })
         .catch((err) => {
           if (err.code === 'PERMISSION_DENIED') {

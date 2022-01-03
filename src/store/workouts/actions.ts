@@ -9,7 +9,7 @@ import {
 } from './types';
 
 const actions: ActionTree<ModuleState, RootState> = {
-  async create({ dispatch }, payload: Workout): Promise<null> {
+  async create({ dispatch }, payload: Workout): Promise<void> {
     // https://firebase.google.com/docs/database/web/read-and-write#updating_or_deleting_data
 
     return new Promise((res, rej) => {
@@ -43,7 +43,7 @@ const actions: ActionTree<ModuleState, RootState> = {
         { text: 'Workout created 😁', type: 'good' },
         { root: true },
       );
-      return res(null);
+      return res();
     });
   },
 
@@ -137,7 +137,7 @@ const actions: ActionTree<ModuleState, RootState> = {
     });
   },
 
-  async remove({ dispatch }, payload: string): Promise<null> {
+  async remove({ dispatch }, payload: string): Promise<void> {
     return new Promise((res, rej) => {
       if (!auth.currentUser) {
         dispatch(
@@ -145,7 +145,7 @@ const actions: ActionTree<ModuleState, RootState> = {
           { text: 'You have no permission to remove a workout 😠', type: 'bad' },
           { root: true },
         );
-        return null;
+        return;
       }
       const { uid } = auth.currentUser;
       const id = payload;
@@ -159,10 +159,9 @@ const actions: ActionTree<ModuleState, RootState> = {
             { root: true },
           );
           dispatch('get');
-          res(null);
+          res();
         })
         .catch((err) => rej(new Error(err.code)));
-      return res(null);
     });
   },
 };
